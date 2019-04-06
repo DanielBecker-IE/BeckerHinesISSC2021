@@ -348,6 +348,19 @@
 % correct bad hyphenation here
 \hyphenation{op-tical net-works semi-conduc-tor}
 
+%------ Additions by Daniel
+%for Lorem 
+\usepackage{lipsum}
+
+
+%Code Syntax 
+\input{includes/TamarinLstListing}
+
+%Commands for usign Tamarin reservered words etc in a consistent way
+\usepackage{TamarinKeywords}
+
+
+%-------- End Additions by Daniel
 
 \begin{document}
 %
@@ -357,8 +370,7 @@
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
-\title{Bare Demo of IEEEtran.cls\\ for IEEE Journals}
-%
+\title{Symbolic Verification of Property Preserving Encryption with Tamarin}
 %
 % author names and IEEE memberships
 % note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
@@ -369,15 +381,15 @@
 % was not built to handle multiple paragraphs
 %
 
-\author{Michael~Shell,~\IEEEmembership{Member,~IEEE,}
-        John~Doe,~\IEEEmembership{Fellow,~OSA,}
-        and~Jane~Doe,~\IEEEmembership{Life~Fellow,~IEEE}% <-this % stops a space
-\thanks{M. Shell was with the Department
-of Electrical and Computer Engineering, Georgia Institute of Technology, Atlanta,
-GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}% <-this % stops a space
-\thanks{J. Doe and J. Doe are with Anonymous University.}% <-this % stops a space
-\thanks{Manuscript received April 19, 2005; revised August 26, 2015.}}
-
+% \author{Michael~Shell,~\IEEEmembership{Member,~IEEE,}
+%         John~Doe,~\IEEEmembership{Fellow,~OSA,}
+%         and~Jane~Doe,~\IEEEmembership{Life~Fellow,~IEEE}% <-this % stops a space
+% \thanks{M. Shell was with the Department
+% of Electrical and Computer Engineering, Georgia Institute of Technology, Atlanta,
+% GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}% <-this % stops a space
+% \thanks{J. Doe and J. Doe are with Anonymous University.}% <-this % stops a space
+% \thanks{Manuscript received April 19, 2005; revised August 26, 2015.}}
+\author{Daniel~Becker}
 % note the % following the last \IEEEmembership and also \thanks - 
 % these prevent an unwanted space from occurring between the last author name
 % and the end of the author line. i.e., if you had this:
@@ -399,8 +411,8 @@ GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}% <-this %
 
 
 % The paper headers
-\markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2015}%
-{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for IEEE Journals}
+%\markboth{Journal of \LaTeX\ Class Files,~Vol.~14, No.~8, August~2015}%
+%{Shell \MakeLowercase{\textit{et al.}}: Bare Demo of IEEEtran.cls for IEEE Journals}
 % The only time the second header will appear is for the odd numbered pages
 % after the title page when using the twoside option.
 % 
@@ -437,7 +449,7 @@ GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}% <-this %
 
 % Note that keywords are not normally used for peerreview papers.
 \begin{IEEEkeywords}
-IEEE, IEEEtran, journal, \LaTeX, paper, template.
+Some keywords.
 \end{IEEEkeywords}
 
 
@@ -454,6 +466,76 @@ IEEE, IEEEtran, journal, \LaTeX, paper, template.
 % For peerreview papers, this IEEEtran command inserts a page break and
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
+
+\section{META}
+Using Tamarin can we model a property preserving encryption protocol and verify it in the symbolical model against a well specified threat profile. Can we get \tamarin{} to find the previously known attacks/limitations.
+
+Approach
+Select a suitable protocol
+	One that is implemnted somewhere rathr than just specified in a paper
+	One that has published attacks/limiations
+	One that is not too complex.
+Model evolution
+		Secure Channel between client and server
+		Deliberately reveal everything stored to sysadmin "Honest but Curious"
+		Prove secure with RND
+		Test with DET
+		Test with OPE
+		Test with Search
+
+
+Candidate Protocol 1
+OPE from CryptDB, "attacked" in \cite{InfrenceAttacks}
+
+Candidate Protocol 2
+DTE from CryptDB, "attacked" in \cite{InfrenceAttacks}
+
+
+
+Notes:
+Distinction between a scheme and a protocol.. are we attacking a protocol or a scheme plus a psuedo protocol that we've invented.
+Insight: Can we use oracles in the attack to cover the gaps in Tamarin. 
+Get andrews notes from DSP
+There's a tamarin paper with a database in it. Use as a basis.
+Thr tutorial contains a simple store /home/dbecker/git/tamarin-prover/examples/Tutorial.spthy
+Challenge is the threshold level
+DET is probably simplest
+
+Paper structure
+META
+	Who is this paper for
+	Key papers and latest literature
+		Read: https://pubs.acs.org/doi/full/10.1021/ac2000169 Skillful writing of an awful research paper
+Royce Murray
+	Paper approach
+		1. Write Methodology
+		2. Review Canditate Protocols
+		3. Write Threat model text
+		3. Write Tamarin Model for protocol execution
+		4. Write model for threate model
+		5. Write results
+		6. Rewrite methodology
+		6. Write introduction
+		8. Write conclusions
+		9. Write Abstract
+		10. Edit
+
+Introduction and motivatioon
+Preliminaries
+	Symbolic modelling and tamarin
+Protocol
+	Background/History
+	How it works
+	Existing attacks and limitations
+Threat Model
+Translation to Tamarin
+	Protocol Execution
+	Threat Model as Lemmas
+
+
+
+
+
 
 
 
@@ -473,16 +555,7 @@ IEEE, IEEEtran, journal, \LaTeX, paper, template.
 % 
 % Here we have the typical use of a "T" for an initial drop letter
 % and "HIS" in caps to complete the first word.
-\IEEEPARstart{T}{his} demo file is intended to serve as a ``starter file''
-for IEEE journal papers produced under \LaTeX\ using
-IEEEtran.cls version 1.8b and later.
-% You must have at least 2 lines in the paragraph with the drop letter
-% (should never be an issue)
-I wish you the best of success.
-
-\hfill mds
- 
-\hfill August 26, 2015
+\IEEEPARstart{T}{oDo} \lipsum[1]
 
 \subsection{Subsection Heading Here}
 Subsection text here.

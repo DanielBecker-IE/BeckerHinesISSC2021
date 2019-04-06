@@ -1,0 +1,52 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{TamarinKeywords}
+%Lemma Types
+\newcommand{\LExecution}{\textit{Execution} - }
+\newcommand{\LOrder}{\textit{Temporal Order} - }
+\newcommand{\LSecurity}{\textit{Security} - }
+
+%ALICE & BOB Notaion
+\newcommand{\playerA}{$A$}
+\newcommand{\playerB}{$B$}
+\newcommand{\playerE}{$E$}
+\newcommand{\playerM}{$M$}
+\newcommand{\Alice}{\textsc{Alice}}
+\newcommand{\Bob}{\textsc{Bob}}
+\newcommand{\Eve}{\textsc{Eve}}
+\newcommand{\Mallory}{\textsc{Mallory}}
+
+%Tamarin words
+% Built in Facts
+\newcommand{\FOut}{\texttt{Out}}
+\newcommand{\FIn}{\texttt{In}}
+\newcommand{\FFr}{\texttt{Fr}}
+
+
+%Rule
+\newcommand{\Rule}[1]{\texttt{#1}}
+%Fact
+\newcommand{\Fact}[1]{\texttt{#1}}
+%Variable
+\newcommand{\Var}[1]{\texttt{#1}}
+
+%Common Maths
+% we use \ensuremath to, well, ensure we are in math mode. This means the command will work within $$ or in normal text
+\newcommand{\PublicKey}[1]{\ensuremath{PK_{#1}}}
+\newcommand{\PrivateKey}[1]{\ensuremath{pk_{#1}}}
+\newcommand{\SessionKey}[2]{\ensuremath{SK_{{#1}{#2}}}}
+
+%Time
+\newcommand{\Time}[1]{\ensuremath{t_{#1}}}
+
+%Authentication Terms
+\newcommand{\WeakAgreement}{\textit{Weak agreement}}
+\newcommand{\NonInjectiveAgreement}{\textit{Non-injective agreement}}
+\newcommand{\Agreement}{\textit{Agreement}}
+\newcommand{\Aliveness}{\textit{Aliveness}}
+\newcommand{\Recentness}{\textit{Recentness}}
+
+%General Terms -- Replace
+\newcommand{\term}[1]{\textit{#1}}
+
+%New Commands for consistent stlying/spelling
+\newcommand{\tamarin}{\textsc{Tamarin}}
