@@ -534,8 +534,46 @@ Translation to Tamarin
 
 
 
+Approach on attacking DET
+The insight is that we are not actually attack the storage protocol for the  "save" operation for the desired value. We are attacking the data at rest (as in Honest but Curious).
+The only "super powers" the attacker has are being able to read all values (which we assume are encrypted) and being able to reason about the frequency analysis of the population.
+We expect a hyothetical attack to look like:
+Client Stores values 
+HbC Attacker reads values
+HbC Attacker notices that the frequency distribution of a column is similar to that of the population.
+HbC concludes with some degree of confidence what the  given value is. 
 
 
+A bit more formally
+Need to model a distribution for the column, a distribution for the population and a confidence threshold.
+
+
+
+Insight 2
+If the system is secure we should not be able to reveal the value if we swap the distributions of the population with a ?normal? or ?random? or ?even? distribution. We can use the diff operator in Tamarin to accomplish this. 
+diff(random distribution, actual population distribution)
+Note this approach only works if population and colum distribution match. We can leverage early work that shows that they do in many cases.
+Diff operator is how tamarin models observational equivlence. 
+If the population and colum distributions are 50/50 then there is no information.
+So what woould an attack look like...
+Consider an 80/20 distribuition
+
+
+Modelling thoughts do we need a "if" rule that reveals only if the population and column distribution is the same? This would seem to be a pretty weak attack model but would it lead to an approach that would work on more complex protocols like differental privacy etc?
+
+The rule would mean... if I have a 80/20 split in the data and an 80/20 split in the population, I am X\% confident that the 80 value in the sample is the 80 value in the population.
+i.e we need to do some stats to figure out what the confience levels are
+The tamarin rules would need to model
+1) The population distribution
+2) The reavel?
+
+A security lemma should model the confidence levels .. i.e. the inverse
+It is not possible that the distribution of the column matches the distribution of the population within a certain confidence threshold.
+
+Idea
+If we had such an if rule it would be fairly trival to run tamarin repeatledy at different distributions an graph if secure/not
+
+Read \cite{Ismal2012}
 
 
 
