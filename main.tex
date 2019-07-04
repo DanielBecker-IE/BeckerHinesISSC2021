@@ -351,7 +351,9 @@
 %------ Additions by Daniel
 %for Lorem 
 \usepackage{lipsum}
-
+%for ABC lists 
+% from https://tex.stackexchange.com/questions/129951/enumerate-tag-using-the-alphabet-instead-of-numbers
+\usepackage{enumitem}
 
 %Code Syntax 
 \input{includes/TamarinLstListing}
@@ -359,6 +361,8 @@
 %Commands for usign Tamarin reservered words etc in a consistent way
 \usepackage{TamarinKeywords}
 
+%For BIG letters C and M
+\usepackage{ dsfont }
 
 %-------- End Additions by Daniel
 
@@ -535,19 +539,49 @@ DET is probably simplest.
 
 \section{Methodology}
 \subsection{High Level Methodology}
-The steps below explain the high level approach. 
-A. Encode the protocol in Tamarin rules and with suitable lemmas to ensure:
-	- Execution (Encryption and Decryption) - the protocol executes correctly (a protocol that never excutes is secure!)
-	- Confindentiality - the adversary never knows the values.
-	- The set of encrypted values grows (the protected data)
-	- A set of counters increments correctly as the population grows; these counters model the distribution in the protected data
-B. The Auxiallry popoulation
-	- This population (more specifically the histogram data) is encoded into the model
-	- The distribution of the aux population is varied and injected in to the model using a script external to Tamarin
-C. An inference reveal rule
-	- If the Aux population distribution matches a protected population the rule will reveal the protected value
-D. Execution
-	- The \tamarin{} verifier is executed with the set of Aux populations. The results are graphed.
+An attacker has access to an encrypted dataset \enc{} over the message space \encSpace{} and plaintext auxiliary dataset \aux{} over the message space \auxSpace. Using a frequency analysis approach as described in \cite{InfrenceAttacks} an attacker will assign plaintext values to to each of the encrypted values by rank ordering the dataset histograms. i.e the most common value in \enc{}\ is declared to be the most common value in \aux{} etc. 
+The general approach is:
+\begin{enumerate}[label=(\Alph*)]
+\item \textbf{Protocol Model} The protocol is modelled with \tamarin{} state transition rules. \tamarin{} uses these state transition rules to move between states. Security and Execution properties are encoded in the form of \texttt{lemmas} using first order propositional logic. 
+\begin{enumerate}
+	\item \LSecurity{Confidentiality}: - the adversary never knows the encrypted values. If this lemma is validated the proof fails.
+    \item \LExecution{Encryption and Decryption}: Lemma to ensure that has the protocol executed correctly. A protocol that never executes remains secure and can give false positive results.
+	\item \LExecution{Growth}: The dataset of encrypted values grows correctly as new values are added and that the set of counters increments correctly as the population grows; these counters model the distribution in the protected data.
+\end{enumerate}
+
+\item \textbf{The Auxiliary Population \aux{} over \auxSpace}: The auxiliary population and its histogram data is encoded into the model using \tamarin{} multisets as \tamarin{} currently has no direct support for counters. The distribution of the auxiliary population is varied and injected in to the model using a script external to \tamarin{}.
+\item\textbf{ Inference Based Reveal Rule}. This is the key element of this approach, it encodes the "intuitive leap" required to connect the distribution of the auxiliary population with the encrypted dataset.   If  distribution of \aux{} matches \enc{} the rule will reveal the plaintext value.
+\item Execution
+	- The \tamarin{} verifier is executed with each of generated \aux{} populations. The results are graphed for analysis.
+\end{enumerate}
+\subsection{Methodology for attack 2-value Determinstic Encryption}
+TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+Finish these next to subsections.
+TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+Deterministic encryption always encodes the same value the same way. It is well known that it is vulnerable to frequency analysis and it has been used since the 9th century\cite{Arab} for breaking classical  encryption techniques.
+A. The DET/2 protocol is encode as two pairs of rules:
+	DEnc('1') -> X
+	DEnc('0') -> Y
+	DDec(X) ->  DEnc('1')
+	DDec(Y) ->  DEnc('0')
+	The actual X and Y values are determined by the setup phase are and do not affect the proof.
+	When DEnc is excuted the appropriate counters are also incremented. Tamarin multisets are used as a base-1 counter (i.e 'X'+'X'+'X'+'X'+'X' = 5).
+B. The Aux poplulation is encoded as a multiset with 2 values. (e.g 1' + '1' + '1' + '1' + '1' + '1' + '0' + '0' + '0' + '0' representing a 60/40 split). Tamarin multisets are not ordered. ('0'+'0'+'1' is equal to '1'+'0'+'0'). To keep runtimes low the aux population is limited to ten distinct binary values.
+The population is varied as follows: 0/10\%, 10/90\% ..., 90/10\%, 100/0\%. 
+Using the built in Observational Equivilence function diff(); Tamarin attempts to prove each model twice, once with the Aux population and once with a perfectly distributed set of values (i.e. 50/50\%). 
+C. The inference rule reavels the encrypted value of X if the auxially population distribution uniquely matches the encrypted dataset population
+D. When executing Tamarin will excute each model twice, if it can not distingush beetween the two cases (50/50 and the one under test) then the proof is valid.
+E. As a control the experiment is repeated using non-deterministic symetric encryption with the expectation that the data is secure regardless of population distribution.
+
+\subsection{Outline of proposed approch for 3 Value Det.}
+A. Rules as above extended to 3 value (A,B,C)
+B. Simlar as above
+C. The inference rule is build uses the follwoing counters:
+		Count of A, count of Not A
+		Count of B, count of Not B
+		Count of C, count of Not C
+The insight being that Not A is equivlient to  [B,C] and we can solve for A first then solve for B, C as previouusly.
+
 
 
 \textbf{Old notes on Methodology}
