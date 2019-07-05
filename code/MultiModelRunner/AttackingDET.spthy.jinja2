@@ -1,0 +1,97 @@
+/*
+ *  Author: Daniel Becker - GENERATED
+ *  Model Name: {{ NAME }}
+ *  Status: DEVELOPMENTAL
+ *
+ *  Comments:
+ *  This model explores ways to attack deterministic(DET) encryption, that is, encryption that always encrypt a give value the same way.
+ *  This model attacks a binary database column at rest, it does not attack the actual database protocol.
+ *  Setup: An auxillary data set exists which accurately models the auxDataset.
+ *  In this case we state that the binary column might represent gender(! badly represent!) and we assume a 60/40 Female/Male split.
+ *  We are asking tamarin to find the database distributions where this is not secure.
+ *  This is intuatively easy for a human. If the database column is 60/40 split with ecrypted strings A/B in a 60/40 split we can condfindetly
+ *  declare that A= Female and B=male
+ *  getting tamarin to do this is not trival.
+ *  We allow Tamarin to add rows to the database until it can trigger a reveal rule; this tells us what database mix is insecure.
+ *  Again, not hard for a human
+ *  The reveal rule compares the % of '1' in the auxDataset (60%) to the percentage of enc('?') in the database.
+ * When they match we got our failure state
+ * to keep the search space sane for now we will use per-deca i.e a 6/4
+ */
+
+theory {{ NAME }}
+begin
+builtins: multiset
+heuristic:S
+
+rule CreateAuxDataset:
+ [ Fr(~p)]
+ --[]->
+   [AuxDataset(~p, {{ AuxDataset }}),
+    AuxDataset1Counter(~p, {{ AuxDataset1Counter }}),
+    AuxDataset0Counter(~p, {{ AuxDataset0Counter }})
+    ]
+
+
+
+rule CreateSampleDataset:
+ [ Fr(~p)]
+ --[]->
+   [SampleDataset(~p, '1'+'1'+'1'+'1'+'1'+'0'+'0'+'0'+'0'+'0')]
+
+
+rule CreateCol1_0:
+  [ Fr(~c1) ]
+  --[ CreateCol1(~c1) ]->
+  [ Column1(~c1, '0')]
+
+rule CreateCol1_1:
+  [ Fr(~c1) ]
+  --[ CreateCol1(~c1) ]->
+ [ Column1(~c1, '1')]
+
+rule Insert1IntoColumn1:
+let nextVal = val + '1'
+in
+  [ Column1( ~c1, val )]
+  --[ Column1( ~c1, nextVal) ]->
+  [ Column1( ~c1, nextVal)  ]
+
+
+rule Insert0IntoColumn1:
+let nextVal = val + '0'
+in
+  [ Column1( ~c1, val )]
+  --[ Column1( ~c1, nextVal) ]->
+  [ Column1( ~c1, nextVal)  ]
+
+
+
+//simple comparision check to see if database and columns are the same
+rule CountersAreEqual:
+[SampleDataset( ~c1, x),AuxDataset(~p, x)]
+--[Sucess(x)]->
+[Sucess(x)]
+
+
+
+lemma Sucess:
+exists-trace
+"
+Ex x #i.
+Sucess(x) @ i
+"
+{#
+/*
+lemma CreateCol[reuse,use_induction]:
+  "All #i x s.
+      Column1(s,x) @ i  ==> Ex #j. CreateCol1(s) @ j & #j < #i"
+
+
+lemma Counter1_Grows[reuse,use_induction]:
+  "All x y #i #j s.
+      Column1(s,x) @ i & Column1(s,y) @ j ==> #i < #j
+      ==> Ex z. x + z = y"
+*/
+#}
+end
