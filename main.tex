@@ -1,4 +1,4 @@
-%% bare_jrnl.tex
+%% bare/jrnl.tex
 %% V1.4b
 %% 2015/08/26
 %% by Michael  Shell
@@ -333,7 +333,7 @@
 % handling and breaking URLs. url.sty is already installed on most LaTeX
 % systems. The latest version and documentation can be obtained at:
 % http://www.ctan.org/pkg/url
-% Basically, \url{my_url_here}.
+% Basically, \url{my/url/here}.
 
 
 
@@ -351,7 +351,9 @@
 %------ Additions by Daniel
 %for Lorem 
 \usepackage{lipsum}
-
+%for ABC lists 
+% from https://tex.stackexchange.com/questions/129951/enumerate-tag-using-the-alphabet-instead-of-numbers
+\usepackage{enumitem}
 
 %Code Syntax 
 \input{includes/TamarinLstListing}
@@ -359,6 +361,8 @@
 %Commands for usign Tamarin reservered words etc in a consistent way
 \usepackage{TamarinKeywords}
 
+%For BIG letters C and M
+\usepackage{ dsfont }
 
 %-------- End Additions by Daniel
 
@@ -470,199 +474,311 @@ Some keywords.
 \section{META}
 Using Tamarin can we model a property preserving encryption protocol and verify it in the symbolical model against a well specified threat profile. Can we get \tamarin{} to find the previously known attacks/limitations.
 
-Approach
-Select a suitable protocol
-	One that is implemnted somewhere rathr than just specified in a paper
-	One that has published attacks/limiations
-	One that is not too complex.
-Model evolution
-		Secure Channel between client and server
-		Deliberately reveal everything stored to sysadmin "Honest but Curious"
-		Prove secure with RND
-		Test with DET
-		Test with OPE
-		Test with Search
+\begin{itemize}
+\item Approach
+\item Select a suitable protocol
+  \item 	One that is implemnted somewhere rathr than just specified in a paper
+  \item 	One that has published attacks/limiations
+  \item 	One that is not too complex.
+\item Model evolution
+  \item 		Secure Channel between client and server
+  \item 		Deliberately reveal everything stored to sysadmin "Honest but Curious"
+  \item 		Prove secure with RND
+  \item 		Test with DET
+  \item 		Test with OPE
+  \item 		Test with Search
+\end{itemize}
+
 
 
 Candidate Protocol 1
-OPE from CryptDB, "attacked" in \cite{InfrenceAttacks}
+	OPE from CryptDB, "attacked" in \cite{InfrenceAttacks}
 
 Candidate Protocol 2
-DTE from CryptDB, "attacked" in \cite{InfrenceAttacks}
-
+	\textbf{DTE from CryptDB, "attacked" in \cite{InfrenceAttacks}}
 
 
 Notes:
 Distinction between a scheme and a protocol.. are we attacking a protocol or a scheme plus a psuedo protocol that we've invented.
 Insight: Can we use oracles in the attack to cover the gaps in Tamarin. 
-Get andrews notes from DSP
-There's a tamarin paper with a database in it. Use as a basis.
-Thr tutorial contains a simple store /home/dbecker/git/tamarin-prover/examples/Tutorial.spthy
-Challenge is the threshold level
-DET is probably simplest
+Challenge is the threshold level.
+DET is probably simplest.
 
-Paper structure
-META
-	Who is this paper for
-	Key papers and latest literature
-		Read: https://pubs.acs.org/doi/full/10.1021/ac2000169 Skillful writing of an awful research paper
-Royce Murray
 	Paper approach
-		1. Write Methodology
-		2. Review Canditate Protocols
-		3. Write Threat model text
-		3. Write Tamarin Model for protocol execution
-		4. Write model for threate model
-		5. Write results
-		6. Rewrite methodology
-		6. Write introduction
-		8. Write conclusions
-		9. Write Abstract
-		10. Edit
-
-Introduction and motivatioon
-Preliminaries
-	Symbolic modelling and tamarin
-Protocol
-	Background/History
-	How it works
-	Existing attacks and limitations
-Threat Model
-Translation to Tamarin
-	Protocol Execution
-	Threat Model as Lemmas
+\begin{enumerate}
+\item 		Write Methodology
+\item 		Review Canditate Protocols
+\item 		Write Threat model text
+\item 		Write Tamarin Model for protocol execution
+\item 		Write model for threate model
+\item 		Write results
+\item 		Rewrite methodology
+\item 		Write introduction
+\item 		Write conclusions
+\item 		Write Abstract
+\item 		Edit
+\end{enumerate}
 
 
-
-
-
-
-
-
-\section{Introduction}
-% The very first letter is a 2 line initial drop letter followed
-% by the rest of the first word in caps.
-% 
-% form to use if the first word consists of a single letter:
-% \IEEEPARstart{A}{demo} file is ....
-% 
-% form to use if you need the single drop letter followed by
-% normal text (unknown if ever used by the IEEE):
-% \IEEEPARstart{A}{}demo file is ....
-% 
-% Some journals put the first two words in caps:
-% \IEEEPARstart{T}{his demo} file is ....
-% 
-% Here we have the typical use of a "T" for an initial drop letter
-% and "HIS" in caps to complete the first word.
-\IEEEPARstart{T}{oDo} \lipsum[1]
-
-\subsection{Subsection Heading Here}
-Subsection text here.
-
-% needed in second column of first page if using \IEEEpubid
-%\IEEEpubidadjcol
-
-\subsubsection{Subsubsection Heading Here}
-Subsubsection text here.
-
-
-% An example of a floating figure using the graphicx package.
-% Note that \label must occur AFTER (or within) \caption.
-% For figures, \caption should occur after the \includegraphics.
-% Note that IEEEtran v1.7 and later has special internal code that
-% is designed to preserve the operation of \label within \caption
-% even when the captionsoff option is in effect. However, because
-% of issues like this, it may be the safest practice to put all your
-% \label just after \caption rather than within \caption{}.
-%
-% Reminder: the "draftcls" or "draftclsnofoot", not "draft", class
-% option should be used if it is desired that the figures are to be
-% displayed while in draft mode.
-%
-%\begin{figure}[!t]
-%\centering
-%\includegraphics[width=2.5in]{myfigure}
-% where an .eps filename suffix will be assumed under latex, 
-% and a .pdf suffix will be assumed for pdflatex; or what has been declared
-% via \DeclareGraphicsExtensions.
-%\caption{Simulation results for the network.}
-%\label{fig_sim}
-%\end{figure}
-
-% Note that the IEEE typically puts floats only at the top, even when this
-% results in a large percentage of a column being occupied by floats.
-
-
-% An example of a double column floating figure using two subfigures.
-% (The subfig.sty package must be loaded for this to work.)
-% The subfigure \label commands are set within each subfloat command,
-% and the \label for the overall figure must come after \caption.
-% \hfil is used as a separator to get equal spacing.
-% Watch out that the combined width of all the subfigures on a 
-% line do not exceed the text width or a line break will occur.
-%
-%\begin{figure*}[!t]
-%\centering
-%\subfloat[Case I]{\includegraphics[width=2.5in]{box}%
-%\label{fig_first_case}}
-%\hfil
-%\subfloat[Case II]{\includegraphics[width=2.5in]{box}%
-%\label{fig_second_case}}
-%\caption{Simulation results for the network.}
-%\label{fig_sim}
-%\end{figure*}
-%
-% Note that often IEEE papers with subfigures do not employ subfigure
-% captions (using the optional argument to \subfloat[]), but instead will
-% reference/describe all of them (a), (b), etc., within the main caption.
-% Be aware that for subfig.sty to generate the (a), (b), etc., subfigure
-% labels, the optional argument to \subfloat must be present. If a
-% subcaption is not desired, just leave its contents blank,
-% e.g., \subfloat[].
-
-
-% An example of a floating table. Note that, for IEEE style tables, the
-% \caption command should come BEFORE the table and, given that table
-% captions serve much like titles, are usually capitalized except for words
-% such as a, an, and, as, at, but, by, for, in, nor, of, on, or, the, to
-% and up, which are usually not capitalized unless they are the first or
-% last word of the caption. Table text will default to \footnotesize as
-% the IEEE normally uses this smaller font for tables.
-% The \label must come after \caption as always.
-%
-%\begin{table}[!t]
-%% increase table row spacing, adjust to taste
-%\renewcommand{\arraystretch}{1.3}
-% if using array.sty, it might be a good idea to tweak the value of
-% \extrarowheight as needed to properly center the text within the cells
-%\caption{An Example of a Table}
-%\label{table_example}
-%\centering
-%% Some packages, such as MDW tools, offer better commands for making tables
-%% than the plain LaTeX2e tabular which is used here.
-%\begin{tabular}{|c||c|}
-%\hline
-%One & Two\\
-%\hline
-%Three & Four\\
-%\hline
-%\end{tabular}
-%\end{table}
-
-
-% Note that the IEEE does not put floats in the very first column
-% - or typically anywhere on the first page for that matter. Also,
-% in-text middle ("here") positioning is typically not used, but it
-% is allowed and encouraged for Computer Society conferences (but
-% not Computer Society journals). Most IEEE journals/conferences use
-% top floats exclusively. 
-% Note that, LaTeX2e, unlike IEEE journals/conferences, places
-% footnotes above bottom floats. This can be corrected via the
-% \fnbelowfloat command of the stfloats package.
+\section{Introduction and motivation}
+\begin{itemize}
+\item Preliminaries
+\item 	Symbolic modelling and tamarin
+\item Protocol
+\item 	Background/History
+\item 	How it works
+\item 	Existing attacks and limitations
+\item Threat Model
+\item Translation to Tamarin
+\item 	Protocol Execution
+\item 	Threat Model as Lemmas
+\end{itemize}
 
 
 
+
+\section{Methodology}
+\subsection{High Level Methodology}
+An attacker has access to an encrypted dataset \enc{} over the message space \encSpace{} and plaintext auxiliary dataset \aux{} over the message space \auxSpace. Using a frequency analysis approach as described in \cite{InfrenceAttacks} an attacker will assign plaintext values to to each of the encrypted values by rank ordering the dataset histograms. i.e the most common value in \enc{}\ is declared to be the most common value in \aux{} etc. 
+The general approach is:
+\begin{enumerate}[label=(\Alph*)]
+\item \textbf{Protocol Model} The protocol is modelled with \tamarin{} state transition rules. \tamarin{} uses these state transition rules to move between states. Security and Execution properties are encoded in the form of \texttt{lemmas} using first order propositional logic. 
+\begin{enumerate}
+	\item \LSecurity{Confidentiality}: - the adversary never knows the encrypted values. If this lemma is validated the proof fails.
+    \item \LExecution{Encryption and Decryption}: Lemma to ensure that has the protocol executed correctly. A protocol that never executes remains secure and can give false positive results.
+	\item \LExecution{Growth}: The dataset of encrypted values grows correctly as new values are added and that the set of counters increments correctly as the population grows; these counters model the distribution in the protected data.
+\end{enumerate}
+
+\item \textbf{The Auxiliary Population \aux{} over \auxSpace}: The auxiliary population and its histogram data is encoded into the model using \tamarin{} multisets as \tamarin{} currently has no direct support for counters. The distribution of the auxiliary population is varied and injected in to the model using a script external to \tamarin{}.
+\item\textbf{ Inference Based Reveal Rule}. This is the key element of this approach, it encodes the "intuitive leap" required to connect the distribution of the auxiliary population with the encrypted dataset.   If  distribution of \aux{} matches \enc{} the rule will reveal the plaintext value.
+\item Execution
+	- The \tamarin{} verifier is executed with each of generated \aux{} populations. The results are graphed for analysis.
+\end{enumerate}
+\subsection{Methodology for attack 2-value Determinstic Encryption}
+TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+Finish these next to subsections.
+TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+Deterministic encryption always encodes the same value the same way. It is well known that it is vulnerable to frequency analysis and it has been used since the 9th century\cite{Arab} for breaking classical  encryption techniques.
+A. The DET/2 protocol is encode as two pairs of rules:
+	DEnc('1') -> X
+	DEnc('0') -> Y
+	DDec(X) ->  DEnc('1')
+	DDec(Y) ->  DEnc('0')
+	The actual X and Y values are determined by the setup phase are and do not affect the proof.
+	When DEnc is excuted the appropriate counters are also incremented. Tamarin multisets are used as a base-1 counter (i.e 'X'+'X'+'X'+'X'+'X' = 5).
+B. The Aux poplulation is encoded as a multiset with 2 values. (e.g 1' + '1' + '1' + '1' + '1' + '1' + '0' + '0' + '0' + '0' representing a 60/40 split). Tamarin multisets are not ordered. ('0'+'0'+'1' is equal to '1'+'0'+'0'). To keep runtimes low the aux population is limited to ten distinct binary values.
+The population is varied as follows: 0/10\%, 10/90\% ..., 90/10\%, 100/0\%. 
+Using the built in Observational Equivilence function diff(); Tamarin attempts to prove each model twice, once with the Aux population and once with a perfectly distributed set of values (i.e. 50/50\%). 
+C. The inference rule reavels the encrypted value of X if the auxially population distribution uniquely matches the encrypted dataset population
+D. When executing Tamarin will excute each model twice, if it can not distingush beetween the two cases (50/50 and the one under test) then the proof is valid.
+E. As a control the experiment is repeated using non-deterministic symetric encryption with the expectation that the data is secure regardless of population distribution.
+
+\subsection{Outline of proposed approch for 3 Value Det.}
+A. Rules as above extended to 3 value (A,B,C)
+B. Simlar as above
+C. The inference rule is build uses the follwoing counters:
+		Count of A, count of Not A
+		Count of B, count of Not B
+		Count of C, count of Not C
+The insight being that Not A is equivlient to  [B,C] and we can solve for A first then solve for B, C as previouusly.
+
+
+
+\textbf{Old notes on Methodology}
+The insight is that we are not actually attack the storage protocol for the  "save" operation for the desired value. We are attacking the data at rest (as in Honest but Curious).
+The only "super powers" the attacker has are being able to read all values (which we assume are encrypted) and being able to reason about the frequency analysis of the population.
+We expect a hyothetical attack to look like:
+\begin{itemize}
+\item Client Stores values 
+\item HbC Attacker reads values
+\item HbC Attacker notices that the frequency distribution of a column is similar to that of the population.
+\item HbC concludes with some degree of confidence what the  given value is. 
+\end{itemize}
+
+A bit more formally; need to model a distribution for the column, a distribution for the population and a confidence threshold.
+
+
+
+Ideas on using observational equivilence.
+If the system is secure we should not be able to reveal the value if we swap the distributions of the population with a ?normal? or ?random? or ?even? distribution. We can use the diff operator in Tamarin to accomplish this. 
+diff(random distribution, actual population distribution) Note this approach only works if population and column distribution match. We can leverage early work that shows that they do in many cases. Diff operator is how tamarin models observational equivalence. 
+If the population and colum distributions are 50/50 then there is no information. So what would an attack look like...
+Consider an 80/20 distribution.
+
+We need a "if" rule that reveals only if the population and column distribution is the same? This would seem to be a pretty weak attack model but would it lead to an approach that would work on more complex protocols like differental privacy etc?
+\begin{itemize}
+\item 
+\item The rule would mean... if I have a 80/20 split in the data and an 80/20 split in the population, I am X\% confident that the 80 value in the sample is the 80 value in the population.
+\item i.e we need to do some stats to figure out what the confience levels are
+\item The tamarin rules would need to model
+\item 1) The population distribution
+\item 2) The reavel?
+\end{itemize}
+
+A security lemma should model the confidence levels .. i.e. the inverse. It is not possible that the distribution of the column matches the distribution of the population within a certain confidence threshold.
+
+Idea
+\textbf{If we had such an if rule it would be fairly trival to run tamarin repeatedly at different distributions an graph if secure/not
+}
+Read \cite{Ismal2012}
+
+
+
+% % // B
+% % Idea
+% % We replace the normal Secret Action Fact and Lemma:
+% % Secret(x) action occurs at timepoint i, the adversary does not know x.
+% % lemma secrecy:
+% % "All x #i.
+% % Secret(x) @i ==> not (Ex #j. K(x)@j)"
+% % With a probably action fact
+% % PSecret(x,y)
+% % And a lemma like
+% % PSecret(x,y) @i ==> not (Ex #j. K(x)@j)"
+% % 	and y<Threshold
+% (This is where the problem comes in as Tamrin doesn't do < for non-temporal variables.
+% well.. when using multiset we can construct numbers like 1+1+1 etc and create lemmas like GreaterThan and LessThan in the Manual. 
+
+
+% Next Step, observationl equivelent for the 0/100 models
+% Model
+% Rule
+% Population Distribution, Column Distribution, E(Value)
+% -> Reveal Value if say(95%) match between Population and Column Distribution
+% Setup phase
+% A, Population 80/20
+% B, Population 50/50
+
+% active populaiton if diff(A,B)
+% from /home/dbecker/git/tamarin-prover/examples/post17/foo/vote/privacy.spthy:
+% rule setup:
+%   [  ]
+%   --[ OnlyOnce() ]->
+%   [ Vote('v1', diff($yes, $no) ), Vote('v2', diff($no, $yes) ) ]
+
+% so:
+
+
+
+(Aside) One attack it would be useful to find  is if the attacker can fill the database with known values...
+
+
+
+
+
+
+
+
+Another Insight
+Maybe we can extend the equational theory
+consider from
+/home/dbecker/git/tamarin-prover/examples/ccs15/probEnc.spthy
+	functions: penc/3, pdec/2, pk/1
+	equations: pdec(penc(m,pk(k),r), k) = m
+Also from manual
+Tamarin also supports private function symbols. In contrast to regular function symbols, Tamarin
+assumes that private function symbols cannot be applied by the adversary. Private functions can
+be used to model functions that implicitly use some secret that is shared between all (honest) users.
+To make a function private, simply add the attribute [private] after the function declaration. For
+example, the line
+
+
+penc(m,k, dP, dS)=E
+where dP models the distribution of the variable in the popultaion and dS is the distribution in the sample.
+pdec(E) = m
+
+er... Can't see how to make this work.
+
+May3rd 
+determanistic encryption
+functions:
+denc/2, ddec/2
+equations:
+ddec(k, denc(k, m))=m
+
+May3rd
+Setup Rule
+Store e('0'), e('0')
+Generate value as diff('0','1') and store
+Reveal Rule
+
+Scenarios for boolean colum
+Population 	Column 	Outcome
+0/100		0/100	Reveal 100%
+100/0		0/100	Reavel 100% but incorrectly
+50/50		50/50	Secure; can not know
+75/25		75/25	Reveal with some propoablity
+
+% May 3rd INSIGHT
+% Can use use Lemmas with counters?
+% Ie test that counter A > counter B?
+% This would allow us to check the relative occurances of 0/1
+% from /home/dbecker/git/tamarin-prover/examples/features/multiset/counter.spthy
+% lemma counter/increases[reuse,use/induction]:
+%   "All x y #i #j s.
+%       Counter(s,x) @ i & Counter(s,y) @ j ==> #i < #j
+%       ==> Ex z. x + z = y"
+% "For all x y and s at time points #i and #j 
+% 	where theres exists a Counter(s, x) at # i and a counter (s,y) at #j; and  #i is before #j; there exists a z such that x + z=y. (i.e.  y>z)
+
+% Soooo....
+% For all Counter0(s,x), Counter0(s,y), Counter1(s,a), Counter1(s,b), at #i #j #k #l; and #i is before #j and #k is before #l there exists z,c,d  such such that 
+% x+z=y and a+c=b
+% AND
+% (this is the important bit)  x+d=a (i.e. a>x)
+
+% [This seems possible but what does it get us...]
+
+% Can we use this to construct a lemma about probablist reveals? and the attack would construct a database where the distribution is skewed to reveal?
+% So the attack might look like a hitting the '1' counter more often that the '0' counter.
+% The next triky bit will be encoding the threshold
+% perhaps we can use multiplaction by addition to generate a suitable value
+% i.e x+x+y=z ... z is at least x*2  
+% Need to test id this works...
+% May 5th
+% Ok this works see /home/dbecker/git/April19Paper/models/DoubleCounters.spthy
+% In principle we can construct any ratio using this technique
+
+% Next step
+% Recap where this gets us...
+% So we can insert into a database with an specified ratio of 0 and 1 that are DET encrypted
+% We could also model a population with a specified ratio. 
+% The bit missing is the attack :-(
+
+% We could have a lemma that encodes the attack threshold
+% I.e it can not be that the ratios of the database and the population are sufficently similar 
+% The found attack will consist of populating the database.. to match a fixed population
+% Let's take the threshold value from \cite{inference}
+% hmm... they just use "Sex. Sex can be either male or female. The most prominent feature of the sex attribute is that most hospitals have more female patients than male patients. This is possibly due to pregnancy, births, and the fact that women live longer. Sex is universally used in all databases that store information about people.
+% •"
+
+% so consider a 60:40 0/1 population... with database with a similar ratio we can just declare that the value of the 60% is 0
+% We can use lemmas to restrict the auxillary population "construction" to the desired ratio i.e. x+x+x=y+y
+% Consider 4 counters
+% Counter/AUX/0, Counter/AUX/1, Counter/DB/A, Counter/DB/B
+% shorter: X0, X1, A, B
+% A valid attack should only be found if XO:X1 == A:B i.e they are in the same ratio.
+% or more simpler X0 == A
+
+But ideally we want a rule that outputs a '0' or '1' and proves and attack rather than just asserts the database distribution matches the population distribution
+IDEA: Could we use hashing of multiset values as an alternative to strict counting?
+IDEA: Can we add a length funtion to use on multiset?
+IDEA: Can we use diff to trigger different ratios?
+IDEA: write a new built in? (sounds hard)
+
+Method: For a given auxiliary dataset, is there a provable insecure database?  
+Proving utility by "fixing" DET by adding a salt
+
+\section{Contribution}
+
+A formal model and validation to attack deterministic encryption. This model can be used as a basis for research into attacking other Property Preserving techniques.
+1/ What is the hypothesis?
+2/ What is the approach and has this approach be done before?
+3/ Who cares? Why?
+		Add citations for model bits that came from other papers to should continuation from existing research. 
+
+
+Motivation/Future work: Extend to hashing attacks?
 
 \section{Conclusion}
 The conclusion goes here.
@@ -687,13 +803,11 @@ The conclusion goes here.
 
 
 \appendices
-\section{Proof of the First Zonklar Equation}
-Appendix one text goes here.
+\section{Code Listing}
+\lstinputlisting[language=Tamarmin]{models/AttackingDET_6040.spthy}
 
-% you can choose not to have a title for an appendix
-% if you want by leaving the argument blank
-\section{}
-Appendix two text goes here.
+
+
 
 
 % use section* for acknowledgment
@@ -781,6 +895,7 @@ The authors would like to thank...
 
 
 % that's all folks
+
 \end{document}
 
 
