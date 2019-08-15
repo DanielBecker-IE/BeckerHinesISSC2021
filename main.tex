@@ -363,7 +363,8 @@
 
 %For BIG letters C and M
 \usepackage{ dsfont }
-
+% for todos
+\usepackage{todonotes}
 %-------- End Additions by Daniel
 
 \begin{document}
@@ -374,7 +375,7 @@
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
-\title{Symbolic Verification of Property Preserving Encryption with Tamarin}
+\title{Inference Attacks on Property Preserving Encryption in the Symbolic Model}
 %
 % author names and IEEE memberships
 % note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
@@ -448,6 +449,7 @@
 % As a general rule, do not put math, special symbols or citations
 % in the abstract or keywords.
 \begin{abstract}
+\todo[inline]{(100 words) Show	Conjecture	Verify	Propose Achieves	Benefits}
 \cite{InfrenceAttacks}
 \end{abstract}
 
@@ -471,56 +473,60 @@ Some keywords.
 % creates the second title. It will be ignored for other modes.
 \IEEEpeerreviewmaketitle
 
-\section{META}
-Using Tamarin can we model a property preserving encryption protocol and verify it in the symbolical model against a well specified threat profile. Can we get \tamarin{} to find the previously known attacks/limitations.
+% \section{META}
+% Using Tamarin can we model a property preserving encryption protocol and verify it in the symbolical model against a well specified threat profile. Can we get \tamarin{} to find the previously known attacks/limitations.
 
-\begin{itemize}
-\item Approach
-\item Select a suitable protocol
-  \item 	One that is implemnted somewhere rathr than just specified in a paper
-  \item 	One that has published attacks/limiations
-  \item 	One that is not too complex.
-\item Model evolution
-  \item 		Secure Channel between client and server
-  \item 		Deliberately reveal everything stored to sysadmin "Honest but Curious"
-  \item 		Prove secure with RND
-  \item 		Test with DET
-  \item 		Test with OPE
-  \item 		Test with Search
-\end{itemize}
-
-
-
-Candidate Protocol 1
-	OPE from CryptDB, "attacked" in \cite{InfrenceAttacks}
-
-Candidate Protocol 2
-	\textbf{DTE from CryptDB, "attacked" in \cite{InfrenceAttacks}}
+% \begin{itemize}
+% \item Approach
+% \item Select a suitable protocol
+%   \item 	One that is implemnted somewhere rathr than just specified in a paper
+%   \item 	One that has published attacks/limiations
+%   \item 	One that is not too complex.
+% \item Model evolution
+%   \item 		Secure Channel between client and server
+%   \item 		Deliberately reveal everything stored to sysadmin "Honest but Curious"
+%   \item 		Prove secure with RND
+%   \item 		Test with DET
+%   \item 		Test with OPE
+%   \item 		Test with Search
+% \end{itemize}
 
 
-Notes:
-Distinction between a scheme and a protocol.. are we attacking a protocol or a scheme plus a psuedo protocol that we've invented.
-Insight: Can we use oracles in the attack to cover the gaps in Tamarin. 
-Challenge is the threshold level.
-DET is probably simplest.
 
-	Paper approach
-\begin{enumerate}
-\item 		Write Methodology
-\item 		Review Canditate Protocols
-\item 		Write Threat model text
-\item 		Write Tamarin Model for protocol execution
-\item 		Write model for threate model
-\item 		Write results
-\item 		Rewrite methodology
-\item 		Write introduction
-\item 		Write conclusions
-\item 		Write Abstract
-\item 		Edit
-\end{enumerate}
+% Candidate Protocol 1
+% 	OPE from CryptDB, "attacked" in \cite{InfrenceAttacks}
+
+% Candidate Protocol 2
+% 	\textbf{DTE from CryptDB, "attacked" in \cite{InfrenceAttacks}}
+
+
+% Notes:
+% Distinction between a scheme and a protocol.. are we attacking a protocol or a scheme plus a psuedo protocol that we've invented.
+% Insight: Can we use oracles in the attack to cover the gaps in Tamarin. 
+% Challenge is the threshold level.
+% DET is probably simplest.
+
+% 	Paper approach
+% \begin{enumerate}
+% \item 		Write Methodology
+% \item 		Review Canditate Protocols
+% \item 		Write Threat model text
+% \item 		Write Tamarin Model for protocol execution
+% \item 		Write model for threate model
+% \item 		Write results
+% \item 		Rewrite methodology
+% \item 		Write introduction
+% \item 		Write conclusions
+% \item 		Write Abstract
+% \item 		Edit
+% \end{enumerate}
 
 
 \section{Introduction and motivation}
+\todo[inline]{2000 words}
+
+\subsection{Background}
+\todo[inline]{500 words}
 \begin{itemize}
 \item Preliminaries
 \item 	Symbolic modelling and tamarin
@@ -534,11 +540,44 @@ DET is probably simplest.
 \item 	Threat Model as Lemmas
 \end{itemize}
 
+\subsection{Motivation}
+\todo[inline]{500 words}
+The real-world effectiveness of inference attacks depends on the availability of a well-correlated data-set. Work on the design of inference attacks /cite{Ismal2012} shows that it is possible to recover information about encrypted data-sets and queries from data leakage combined with auxiliary data-sets such as statistical census data. Work in /cite{InfrenceAttacks} shows that information can be recovered for data encrypted with Deterministic Encryption (DET) and Order Preserving Encryption (OPE) with a high degree of accuracy; 60\%+ for DET and 80\%+ for OPE in the case of certain attribute of medical records. 
+This work explores initial directions in how symbolical verification can be extended to detect potential inference attacks.
 
+Inference attacks are one of the oldest attack models. Consider a simple letter substitution cipher (Caesar's cipher) where D replaces with A, E replaces B etc. An attacker can generate a letter frequency histogram from an auxiliary data-set such as previous messages or even a general corpus. For the English language message the attacker could assume that the most used letter in the enciphered message corresponds to the letter 'e'. The attacker can continue in this manner using individual letter frequency or include more sophisticate analysis of two-letter frequencies for example.
+In a more modern context we can consider a database column encrypted with Deterministic Encryption (DET) i.e an encryption that always produces the same encrypted text for a given plain-text. This form of encryption forms part of many Encrypted database systems such as CryptDB /cite{CryptDB}, /cite{cipherbase}, /cite{Bellare2007}. 
 
+DET encryption is a useful construct for building encrypted databases as it performs well, does not suffer from significant message expansion, and  permits searching. DET encryption is know to leak equality information /cite{SOK} but /cite{InfrenceAttacks} shows that with a suitable auxiliary data-set the individual values are recoverable via inference. Consider a DET encrypted database column representing the sex of patients who stayed at a hospital; A simple histogram of the two possible values might show a 55\%/45\% split. An attacker could infer that the 55\% represents females as auxiliary data-sets show more of the patients will be female/cite{InfrenceAttacks} than male. This fact can then be leveraged to infer other attributes; i.e certain disease types affect females more than males; more males are born that females and females have a longer life expectancy. These publicly available statistics are an auxillary dataset that an attacker can freely use. 
 
+The number of possible values in the dataset affects the success of such attacks. For example the recovery rate of the patients \textit{ Age} was only 10\% in 83\% of the hospitals /cite{InfrenceAttacks}; this was due to the large number of values and that multiple values have similar frequencies.
+
+The security of such a system then relies on the \_absence\_ of a strongly correlated auxiliary data-set and on the size and distribution of the values.
+\subsection{Contribution}
+\todo[inline]{1000 words}
+\subsection{Related Work}
+\todo[inline]{500 words}
+\subsection{Threat Model}
+This paper considers a threat model where an adversary has access to an encrypted data set (legitimately as in an honest-but-curious security model or illegitimately in a a breech scenario). The attacker also has access to an auxiliary dataset that is structured in the same manner as the encrypted dataset i.e. same data-types and number of distinct values. This auxiliary dataset could be in the form of a publicly available dataset or it could be the result of a side-channel attack \cite{Kocher96}.\todo[inline]{Examples of side channel attacks.}
+\todo[inline]{[Adversarial Goals 100 words
+	Adversarial information 500
+	Auxiliary Dataset 500}
+\subsection{Auxiliary Dataset}
+\todo[inline]{What it is, why they are important, how easy they are to get etc.
+	How well correlated is the aux column with the unencrypted values}
+\subsection{Symbolic Verification and Tamarin}
+\todo[inline]{500 words}
+\subsection{Property Preserving Encryption}
+\todo[inline]{250 words}
+\subsection{Inference}
+\todo[inline]{500 words}
+\todo[inline]{O: Islam, Kuzu and Kantrcioglu \cite{Ismal2012} showed that inference attacks are useful , summarise contribution.}
 \section{Methodology}
-\subsection{High Level Methodology}
+\subsection{Implementing Inference Attack in a Symbolical Model with \tamarin{}}
+\todo[inline]{1500 words}
+We use an Observational Equivalence approach to compare an evenly distributed auxiliary dataset (i.e. semantically secure and immune to inference) with a target dataset that \tamarin{} can generate by inserting values. In the case of an evenly distributed auxiliary dataset the there is nothing to infer from regardless of the distribution of the target dataset If two protocols are observational equivalence an attacker can not reason about the differences and Tamarin can prove that an adversary can not distinguish between two systems and we can prove that the data is secure.
+
+
 An attacker has access to an encrypted dataset \enc{} over the message space \encSpace{} and plaintext auxiliary dataset \aux{} over the message space \auxSpace. Using a frequency analysis approach as described in \cite{InfrenceAttacks} an attacker will assign plaintext values to to each of the encrypted values by rank ordering the dataset histograms. i.e the most common value in \enc{}\ is declared to be the most common value in \aux{} etc. 
 The general approach is:
 \begin{enumerate}[label=(\Alph*)]
@@ -550,28 +589,38 @@ The general approach is:
 \end{enumerate}
 
 \item \textbf{The Auxiliary Population \aux{} over \auxSpace}: The auxiliary population and its histogram data is encoded into the model using \tamarin{} multisets as \tamarin{} currently has no direct support for counters. The distribution of the auxiliary population is varied and injected in to the model using a script external to \tamarin{}.
-\item\textbf{ Inference Based Reveal Rule}. This is the key element of this approach, it encodes the "intuitive leap" required to connect the distribution of the auxiliary population with the encrypted dataset.   If  distribution of \aux{} matches \enc{} the rule will reveal the plaintext value.
-\item Execution
-	- The \tamarin{} verifier is executed with each of generated \aux{} populations. The results are graphed for analysis.
+\item\textbf{ Inference Based Reveal Rule}. This is t0he key element of this approach, it encodes the "intuitive leap" required to connect the distribution of the auxiliary population with the encrypted dataset.   If  distribution of \aux{} matches \enc{} the rule will reveal the plaintext value.
+\missingfigure{Schematic diagram of reveal rule}
+\item \textbf{Execution}
+	- The \tamarin{} verier is executed with each of generated \aux{} populations. The results are graphed for analysis.
 \end{enumerate}
-\subsection{Methodology for attack 2-value Determinstic Encryption}
-TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
-Finish these next to subsections.
-TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO TODO
+
+\missingfigure{Schematic diagram of approach}
+Procedural exploration of the permutations of the auxiliary dataset allows additional insights in to the particular situations where a protocol is secure or not.
+
+
+As a control \todo[inline]{IDEA: Explore if 2 Value DET plus salt helps... i.e 2 values becomes 20 values... probably can be discounted as the salts need to be know by the client and hence will be known by the attacker. Might be interesting way of extending the model for exposition purposes.
+There is a model of attacking things link ARX which involved having access to a complete backup of the database and applying a Cash like approach to infinitely querying it.
+} 
+\section{Case Studies on applying technique}
+\todo[inline]{1500}
+\subsection{Attackking 2-value Determinstic Encryption}
 Deterministic encryption always encodes the same value the same way. It is well known that it is vulnerable to frequency analysis and it has been used since the 9th century\cite{Arab} for breaking classical  encryption techniques.
+\todo[inline]{Why atttack DET? We know it is insecure. Is DET used? HAshing is a form of DET and is commonly used. When used withour proper its vulnerable. (Could model this handily?) }
+
 A. The DET/2 protocol is encode as two pairs of rules:
 	DEnc('1') -> X
 	DEnc('0') -> Y
 	DDec(X) ->  DEnc('1')
 	DDec(Y) ->  DEnc('0')
 	The actual X and Y values are determined by the setup phase are and do not affect the proof.
-	When DEnc is excuted the appropriate counters are also incremented. Tamarin multisets are used as a base-1 counter (i.e 'X'+'X'+'X'+'X'+'X' = 5).
-B. The Aux poplulation is encoded as a multiset with 2 values. (e.g 1' + '1' + '1' + '1' + '1' + '1' + '0' + '0' + '0' + '0' representing a 60/40 split). Tamarin multisets are not ordered. ('0'+'0'+'1' is equal to '1'+'0'+'0'). To keep runtimes low the aux population is limited to ten distinct binary values.
+	When DEnc is executed the appropriate counters are also incremented. Tamarin multisets are used as a base-1 counter (i.e 'X'+'X'+'X'+'X'+'X' = 5).
+B. The Aux population is encoded as a multiset with 2 values. (e.g 1' + '1' + '1' + '1' + '1' + '1' + '0' + '0' + '0' + '0' representing a 60/40 split). Tamarin multisets are not ordered. ('0'+'0'+'1' is equal to '1'+'0'+'0'). To keep run-times low the aux population is limited to ten distinct binary values.
 The population is varied as follows: 0/10\%, 10/90\% ..., 90/10\%, 100/0\%. 
-Using the built in Observational Equivilence function diff(); Tamarin attempts to prove each model twice, once with the Aux population and once with a perfectly distributed set of values (i.e. 50/50\%). 
-C. The inference rule reavels the encrypted value of X if the auxially population distribution uniquely matches the encrypted dataset population
-D. When executing Tamarin will excute each model twice, if it can not distingush beetween the two cases (50/50 and the one under test) then the proof is valid.
-E. As a control the experiment is repeated using non-deterministic symetric encryption with the expectation that the data is secure regardless of population distribution.
+Using the built in Observational Equivalence function diff(); Tamarin attempts to prove each model twice, once with the Aux population and once with a perfectly distributed set of values (i.e. 50/50\%). 
+C. The inference rule reavels the encrypted value of X if the auxiliary population distribution uniquely matches the encrypted dataset population
+D. When executing Tamarin will ex cute each model twice, if it can not distinguish between the two cases (50/50 and the one under test) then the proof is valid.
+E. As a control the experiment is repeated using non-deterministic symmetric encryption with the expectation that the data is secure regardless of population distribution.
 
 \subsection{Outline of proposed approch for 3 Value Det.}
 A. Rules as above extended to 3 value (A,B,C)
@@ -599,7 +648,7 @@ A bit more formally; need to model a distribution for the column, a distribution
 
 
 
-Ideas on using observational equivilence.
+Ideas on using observational equivalence.
 If the system is secure we should not be able to reveal the value if we swap the distributions of the population with a ?normal? or ?random? or ?even? distribution. We can use the diff operator in Tamarin to accomplish this. 
 diff(random distribution, actual population distribution) Note this approach only works if population and column distribution match. We can leverage early work that shows that they do in many cases. Diff operator is how tamarin models observational equivalence. 
 If the population and colum distributions are 50/50 then there is no information. So what would an attack look like...
@@ -777,12 +826,25 @@ A formal model and validation to attack deterministic encryption. This model can
 3/ Who cares? Why?
 		Add citations for model bits that came from other papers to should continuation from existing research. 
 
+\subsection{Future Work}
+Future work areas include generalising this technique and exploring adding inference rules automatically to existing symbolic models to extend the applicability of the technique.
 
-Motivation/Future work: Extend to hashing attacks?
+Motivation/Future work: Extend to hashing attacks? 	We only consider exact matches, the reveal rule could be extended to have fuzzier definition.
+	Generalise proofs rather than relying on brute force.
+\todo[inline]{Re-run using different Tamarin heuristic models to see if performance ca be improved. This is likely just stretching out the data but no real insights.
+}
+\todo[inline]{That bit about more numbers starting with 1 that other numbers (is there a reference for this)
+}
+\todo[inline]{
+ Consider how a  ℓₚ approach would work in Tamarin? very difficult with out maths.... Could perhaps use python to generate a bunch of rules?
+}
+\todo[inline]{ What remains unresolved? 
+	The Tamarin tool could be extended to have the means to vary an Auxiliary population baked in to it. Other protocols could be explored; ARX for example or ORAMS. The statisical significance work has not been undertaking; we've merely declared some threshold exists.
 
+}
 \section{Conclusion}
-The conclusion goes here.
-
+\todo[inline]{200 words}
+This novel approach of injecting a auxiliary population and inference rule into a symbolic verification model has proved feasible for some scenarios. 
 
 
 
@@ -822,7 +884,36 @@ The authors would like to thank...
 \ifCLASSOPTIONcaptionsoff
   \newpage
 \fi
+\todo[inline]{
+Browns 8 Questions:
+1. Who are intended readers? (3-5 names) 
+Someone like Cas Cremer from the the tamarin world
+Charles V Wright from the inference paper (and helped with the SoK paper)
+Someone like Popa or other protocol developer
 
+2. What did you do? (50 words)
+	1. Developed a set of machine verifiable symbolic models encompassing a property preserving encryption protocol, auxiallary population and set of security properties to be verified.
+		The model includes a specification for the attacker model and an new inference rule.
+	2. Verifiy the model using Tamarin with a set of auxiallry populations where the distribution is varied.
+
+3. Why did you do it? (50 words)
+	Encryption protocols are hard to get right. Extending the symbolical model to include inference attacks extends the capablities of the tooling and allows additional attack vectors to be found. This work does not seek to generate new attack models but to automated the discovery tof potential attacks in proofs.
+4. What happened? (50 words)
+	The tooling was sucessfully extended to interate over multiple auxially populations deomonstrating the importance of introducing auxially data in to models and the viablity of the approach. The results on theritical models match well with emperical results previsouly pubished in /cite{inference}. The code used in the approach was published to allow others to extend on this work.
+5. What do results mean in theory? (50 words)
+	This approcah extends the the applicaplity of formal validation of cryptographic protocols. It clearly highlights some boundaries for using PPE techniques. (TODO: Does this mean we can say never use DET if less that N distinct values?). 
+
+6. What do results mean in practice? (50 words)
+	Symobolical verification can be used for a broader range of protocols; certain prtocols should not be used execept in very carefully controlled enviroments. Auxiallry populations are very powerful.
+7. What is the key benefit for readers (25 words)
+	The reader understands how the availablity and use of an auxiallry populations adds an attacker. How symbolical verification with an auxiallry population can reveal additional attack vectors. 
+8. What remains unresolved? (no word limit) 
+	The Tamarin tool could be extended to have the means to vary an Auxiary population baked in to it. Other protocols could be explored; ARX for example or ORAMS. The statisical signaficance work has not been undertaking; we've merely declared some threshold exists.
+
+
+ 
+
+}
 
 
 % trigger a \newpage just before the given reference
