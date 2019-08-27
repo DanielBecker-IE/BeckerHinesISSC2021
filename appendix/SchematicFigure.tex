@@ -1,0 +1,76 @@
+
+\begin{figure}
+ 
+%\begin{adjustbox}{width=\linewidth}
+        \resizebox{\linewidth}{!}{
+        % Define the layers to draw the diagram
+            \pgfdeclarelayer{background}
+            \pgfdeclarelayer{foreground}
+            \pgfsetlayers{background,main,foreground}
+            \begin{tikzpicture}[node distance = 3cm, auto]
+                % Place nodes
+                \node (L_aux00) [block] {};
+                \path (L_aux00.south east)+(-.75, 0.5) node (L_aux01) [block]{};
+                \path (L_aux01.south east)+(-.75, 0.5) node (L_aux02) [block]{};
+                \path (L_aux02.south east)+(-.75, 0.5) node (L_aux) [thickblock]{ Auxiliary Data-sets $\aux{}_n$ over \auxSpace};
+                
+                
+                \path (L_aux.east)+(2,0) node  (L_insert) [block] {Modify Rules};
+                \path (L_insert.south)+(0,-2) node  (L_enc) [block] {Encrypted Data \enc{} over \encSpace{}};
+                
+              
+                \path (L_insert.east)+(3,0) node  (R_aux) [thickblock] {Evenly Distributed Auxiliary Data-set \auxsecure};
+              
+                \path (L_insert.east)+(6,0)  node  (R_insert) [block] {Modify Rules};
+                \path (R_insert.south)+(0,-2) node  (R_enc) [block] {Encrypted Data \enc{} over \encSpace{}};
+              
+                 
+                \draw[arrow]  (L_insert.south) -- node [above]{}(L_enc.90);
+                \draw[arrow]  (R_insert.south) -- node [above]{}(R_enc.90);
+                
+                \path (L_enc.south)+(-1.5,-2) node (L_infer) [block] {Infer Rule};
+                \path (R_enc.south)+(-1.5,-2) node (R_infer) [block] {Infer Rule};
+                
+                \draw[arrow]  (L_aux.south) -- node [above]{}(L_infer.90);
+                \draw[arrow]  (R_aux.south) -- node [above]{}(R_infer.90);
+                
+                \draw[arrow]  (L_enc.south) -- node [above]{}(L_infer.90);
+                \draw[arrow]  (R_enc.south) -- node [above]{}(R_infer.90);
+                
+                \path(L_infer.south)+(0,-2) node (L_lemma) [block] {Lemmas};
+                \path(R_infer.south)+(0,-2) node (R_lemma) [block] {Lemmas};
+                
+                \draw[arrow]  (L_infer.south) -- node [above]{}(L_lemma.90);
+                \draw[arrow]  (R_infer.south) -- node [above]{}(R_lemma.90);
+                
+                \path (L_lemma.south)+(+3.5,-2) node (OBS) [wideblock] {Observationally Equivalent?};
+             
+                 \draw[arrow]  (L_lemma.south) -- node [above]{}(OBS.90);
+                 \draw[arrow]  (R_lemma.south) -- node [above]{}(OBS.90);
+             
+                \
+                 \begin{pgfonlayer}{background}
+                        \path (L_aux00.west)+(-0.5,2) node (L_bg_nw) {};
+                        \path (OBS.north -| L_enc.east)+(0.5,0.5) node (L_bg_se) {};
+                          
+                        \path[fill=yellow!20,rounded corners, draw=black!50, dashed]
+                            (L_bg_nw) rectangle (L_bg_se) {};     
+                            
+                        \path (L_bg_nw.north) +(3.5,-1) node (L_title) {\textbf{Left Hand System}};
+                    
+                        \path (R_aux.west)+(-0.5,2.7) node (R_bg_nw) {};
+                        \path (OBS.north -| R_enc.east)+(0.5, 0.5) node (R_bg_se) {};
+                          
+                        \path[fill=yellow!20,rounded corners, draw=black!50, dashed]
+                            (R_bg_nw) rectangle (R_bg_se){};        
+                    
+                        \path (R_bg_nw.north)+ (3,-1) node (R_title) {\textbf{Right Hand System}};
+ 
+                \end{pgfonlayer} 
+            \end{tikzpicture}
+            }
+
+%\end{adjustbox}
+\caption{ Schematic Overview of the use of method used. \tamarin{} is repeatedly used in Observational Equivalence mode to compare a Left Hand System containing a varying Auxiliary data-set $z_n$ to a Right Hand System containing an evenly distributed data-set $z_{secure}$. The systems, including lemmas and state transition rules for insertion and inference are identical in all other respects. Procedural exploration of the permutations of the auxiliary dataset allows identification insights in to the particular situations where a protocol is secure or not.}
+ \label{fig:approach}
+ \end{figure}
