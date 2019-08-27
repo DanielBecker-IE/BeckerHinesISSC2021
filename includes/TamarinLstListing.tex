@@ -31,7 +31,10 @@
   breaklines=true, % wrap lines if they don't fit
   %frame=trbl, % draw a frame at the top, right, left and bottom of the listing
   frame=tb, % draw a frame at the top and bottom of the listing
-  %frameround=tttt, % make the frame round at all four corners
+  xleftmargin=\dimexpr\fboxsep+\fboxrule,
+  xrightmargin=\dimexpr\fboxsep+\fboxrule,
+  numbersep=0.5em,
+    %frameround=tttt, % make the frame round at all four corners
   framesep=4pt, % quarter circle size of the round corners
   numbers=left, % show line numbers at the left
   numberstyle=\scriptsize\ttfamily, % style of the line numbers

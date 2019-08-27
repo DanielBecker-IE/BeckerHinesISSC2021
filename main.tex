@@ -661,8 +661,9 @@ This protocol is modelled and attacked as follows:
 Using the built in Observational Equivalence function diff(); Tamarin attempts to prove each model twice, once with the Aux population and once with a perfectly distributed set of values (i.e. 50/50\%). 
 \item As a control the experiment is repeated using non-deterministic Random encryption with the expectation that the data is secure regardless of population distribution. This is discussed below.
 \end{enumerate}
-\subsubsection{Results} As intuitively expected only the protocol is only proved secure in the presence of a 50/50 auxiliary distribution. All other auxiliary distributions allow the symbolic verified to find an attack scenario via inference. This is an important validation of validity of the approach.
-\todo[inline]{Add timings to prove it runs in a sensible amount of time}
+
+\subsubsection{Results} As intuitively expected only the protocol is only proved secure in the presence of a 50/50 auxiliary distribution. All other auxiliary distributions allow the symbolic verified to find an attack scenario via inference. The elapsed run time of the verification on commodity hardware was not significant. These findings are an important validation of validity and practicality of the approach.
+
 \subsection{Attacking 2-value Random Encryption}
 As a control for the above case we also modelled a similar protocol replacing the DET equations with non-deterministic encryption.
 This mode of encryption does not allow for searching and is not classed as Property Preserving. This is modelled by the RND equation below. This form of encryption is typically implemented by including a fresh random value in the encryption and as a side effect this technique causes message expansion. This random value is discarded on decryption. A RND encryption function is used in \cite{Popa2011} and other systems as a secure but unsearchable encryption option.
@@ -671,15 +672,15 @@ This mode of encryption does not allow for searching and is not classed as Prope
 \end{enumerate}
 The execution method was identical to that used in the DET case above.
 \subsubsection{Results}
-
-As expected the prover was not able to find an inference attack in any auxiliary population scenario. \todo[inline]{Add timings to prove it runs in a sensible amount of time}
+As expected the prover was not able to find an inference attack in any auxiliary population scenario. As with the previous case study the automated proofs did not take a significant about of time to run.
 
 \subsection{Attacking Hash functions}
 \todo[inline]{TODO Pretty trivial to rerun over a bunch of different hash functions which will be insecure. Little bit more to implement Hash + salt which will be secure.  Hashing is a form of DET and is commonly used. When used with out proper salt its vulnerable. (Could model this handily and find references to examples where it is not salted correctly and breached) }
-\tamarin{} has builtin support for a hashing equation. This equation 
+\tamarin{} has built-in support for a hashing equation. This equation 
 
-\subsection{Generalisation - Attacking Det without external Auxiliary data}
-\todo[inline]{We ran models to confirm that the inference rule can generalise and find attacks without the presence of an specified auxiliary population. This approach is based on having the prover find a combination of encrypted data and auxiliary data that leads to data being revealed via the inference rule. This approach is useful for to find that a protocol is insecure but it does not help enumerate the conditions under which the inference is a problem. This approach may be particularly useful for finding attacks where the auxiliary data is a bi-product of the  protocol execution, i.e side channel attacks etc}
+\subsection{Generalisation - Attacking DET without external Auxiliary data}
+We ran models to confirm that the inference rule can generalise and find attacks without the presence of an specified auxiliary population. By removing the externally generated auxiliary population and adding a second set of \texttt{Modify Rules} that allow the prover to generate both the target dataset and the auxiliary dataset. This approach is based on having the prover find a combination of encrypted data and auxiliary data that leads to data being revealed via the inference rule. This approach is useful for to find that a protocol \textit{is} insecure but it does not help enumerate the conditions under which the inference is a allows an attacker to reveal data. This approach may be particularly useful for finding attacks where the auxiliary data is a by-product of the  protocol execution, i.e side channel attacks.
+
 \section{Future Work}
 Future work areas include generalising this technique and exploring adding inference rules automatically to existing symbolic models to extend the applicability of the technique. Investigations could be made to model a  ℓₚ attack\cite{InfrenceAttacks}. Currently the infer rule use an exact match, the rule could be extended to have reveal within a specified confidence level of a match.
 
@@ -699,9 +700,9 @@ Future work areas include generalising this technique and exploring adding infer
 
 % }
 
- \todo[inline]{
-There is a model of attacking things link ARX which involved having access to a complete backup of the database and applying a Cash\cite{CashLeackageAbuse} like approach to infinitely querying it.
-}
+%  \todo[inline]{
+% There is a model of attacking things link ARX which involved having access to a complete backup of the database and applying a Cash\cite{CashLeackageAbuse} like approach to infinitely querying it.
+% }
 
 \subsection{Outline of proposed approach for 3 Value Det.}
 \todo[inline]{A. Rules as above extended to 3 value (A,B,C)

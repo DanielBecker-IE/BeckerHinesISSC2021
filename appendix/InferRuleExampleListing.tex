@@ -1,7 +1,6 @@
 % In this code listing ¿ is used as an escape character for comments an latex anchors etc
 \begin{lstlisting}[language=Tamarmin, escapechar=¿, 
 caption={Example state transition rule for Inference. Informally, this rule reveals the encrypted values when the histograms of the encrypted data and the auxiliary data match. This example shows two different techniques to model the histogram; \texttt{EncData}(Line \ref{lst:InferRuleEnc}) models the data and the histogram counters as part of a single fact while the auxiliary histogram counters are encoded as two separate facts(Lines \ref{lst:InferRuleCounter0} and \ref{lst:InferRuleCounter1}). Combining the counters in a single fact reduces the verification search space and speeds up proofs. The premise of this example rule(Lines  \ref{lst:InferRulePremiseStart}-\ref{lst:InferRulePremiseEnd}) specifies that this rule may only be executed when \texttt{aval} and \texttt{bval} are equal in all the counters i.e. the histograms for the encrypted and auxiliary data-sets match exactly. This rule has an \texttt{Action Fact}(Line \ref{lst:InferRuleActionFacts}) that is used in the the security property lemmas. The conclusion of this example(Line \ref{lst:InferRuleConclusion}) uses the built-in \texttt{K()} fact to model that the adversary now knows these values through inference. } ,label={lst:InferRule}]
-
 rule Infer:
    [¿\label{lst:InferRulePremiseStart}¿
    EncData( val, aval, bval ), ¿\label{lst:InferRuleEnc}¿
