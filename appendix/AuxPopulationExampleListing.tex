@@ -1,0 +1,16 @@
+% In this code listing ¿ is used as an escape character for comments an latex anchors etc
+\begin{lstlisting}[language=Tamarmin, escapechar=¿, 
+caption={Example state transition rule for Auxiliary Dataset and Associated histogram. Breifly, \tamarin{} models protocols as \textit{multiset rewriting rules} which operate on the sysmtem state. This rule models the initialisation of an auxiliary dataset and a two counter histogram. Rules consist of a \textit{Premise(Line \ref{lst:CreateAuxDatasetRulePremise})} , \textit{Actions Facts(Line \ref{lst:CreateAuxDatasetRuleActionFacts})} and a \textit{Conclusion(Lines \ref{lst:CreateAuxDatasetRuleConclusionBegin}-\ref{lst:CreateAuxDatasetRuleConclusionEnd})}. The premise specifies what must be present before this rule can execute, tn this example the Premise only requires a \textit{fresh} variable which an be generated at any point by the built-in \textit{Fr} fact at any point. This example does not contain any Actions Facts; conceptually they are used to annotate the execution trace and can be reference from lemmas to reason about the execution. The conclusion represents the state after the rule is executed; this rule contains three facts:  the Auxiliary Population(Line \ref{lst:CreateAuxDatasetRuleConclusionFactA}), the 1's counter(Line \ref{lst:CreateAuxDatasetRuleConclusionFactB})   and the 0's counter (Line \ref{lst:CreateAuxDatasetRuleConclusionFactC}). All three of these rules contain the \texttt{diff} operator, which is used in Observational equivalence mode to select the appropriate facts for the Left Hand Side(LHS) and Right Hand Side(RHS) systems. In this example the Auxiliary population  for the LHS is contains 30\% '1's and 70\% '0's, the RHS contains the equally distributed 50\%/50\% population. The two histogram counters are modelled as base-1 un-ordered multi-sets; theses counters model the distribution of the auxiliary populations and are compared to the target population in the inference rule. The 'ZERO' value is required for consistency when modelling empty multi-sets.},label={lst:CreateAuxDataset}]
+rule CreateAuxDataset:  ¿\label{lst:CreateAuxDatasetRule}¿
+ [ Fr(~p)] ¿\label{lst:CreateAuxDatasetRulePremise}¿
+ --[]-> ¿\label{lst:CreateAuxDatasetRuleActionFacts}¿
+   [AuxDataset(~p, ¿\label{lst:CreateAuxDatasetRuleConclusionBegin}¿
+        diff( '1'+'1'+'1'+'0'+'0'+'0'+'0'+'0'+'0'+'0',  ¿\label{lst:CreateAuxDatasetRuleConclusionFactA}¿
+              '1'+'1'+'1'+'1'+'1'+'0'+'0'+'0'+'0'+'0')),
+    AuxDataset1Counter(~p,  ¿\label{lst:CreateAuxDatasetRuleConclusionFactB}¿
+        diff( 'ZERO'+'X'+'X'+'X','ZERO'+'X'+'X'+'X'+'X'+'X')),  
+    AuxDataset0Counter(~p,  ¿\label{lst:CreateAuxDatasetRuleConclusionFactC}¿
+        diff( 'ZERO'+'X'+'X'+'X'+'X'+'X'+'X'+'X','ZERO'+'X'+'X'+'X'+'X'+'X'))
+    ] ¿\label{lst:CreateAuxDatasetRuleConclusionEnd}¿
+
+\end{lstlisting}
