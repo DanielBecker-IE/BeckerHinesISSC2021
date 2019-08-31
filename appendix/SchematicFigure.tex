@@ -12,14 +12,14 @@
                 \node (L_aux00) [block] {};
                 \path (L_aux00.south east)+(-.75, 0.5) node (L_aux01) [block]{};
                 \path (L_aux01.south east)+(-.75, 0.5) node (L_aux02) [block]{};
-                \path (L_aux02.south east)+(-.75, 0.5) node (L_aux) [thickblock]{ Auxiliary Data-sets $\aux{}_n$ over \auxSpace};
+                \path (L_aux02.south east)+(-.75, 0.5) node (L_aux) [thickblock]{ Auxiliary Datasets $\aux{}_n$ over \auxSpace};
                 
                 
                 \path (L_aux.east)+(2,0) node  (L_insert) [block] {Modify Rules};
                 \path (L_insert.south)+(0,-2) node  (L_enc) [block] {Encrypted Data \enc{} over \encSpace{}};
                 
               
-                \path (L_insert.east)+(3,0) node  (R_aux) [thickblock] {Evenly Distributed Auxiliary Data-set \auxsecure};
+                \path (L_insert.east)+(3,0) node  (R_aux) [thickblock] {Evenly Distributed Auxiliary Dataset \auxsecure};
               
                 \path (L_insert.east)+(6,0)  node  (R_insert) [block] {Modify Rules};
                 \path (R_insert.south)+(0,-2) node  (R_enc) [block] {Encrypted Data \enc{} over \encSpace{}};

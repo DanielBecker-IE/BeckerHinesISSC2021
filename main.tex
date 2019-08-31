@@ -368,6 +368,8 @@
 % for todos
 \usepackage{todonotes}
 
+%For aligned etc
+\usepackage{amsmath}
 
 
 %Block Diagrams
@@ -430,7 +432,9 @@
 % GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}% <-this % stops a space
 % \thanks{J. Doe and J. Doe are with Anonymous University.}% <-this % stops a space
 % \thanks{Manuscript received April 19, 2005; revised August 26, 2015.}}
-\author{Daniel~Becker}
+\author{Daniel~Becker,~\IEEEmembership{Member,~IEEE,} and Andrew~Hines,~\IEEEmembership{Senior~Member,~IEEE}\\
+School of Computer Science\\University College Dublin, Ireland\\
+ Email: daniel@becker.ie,andrew.hines@ucd.ie}
 % note the % following the last \IEEEmembership and also \thanks - 
 % these prevent an unwanted space from occurring between the last author name
 % and the end of the author line. i.e., if you had this:
@@ -561,36 +565,36 @@ We present a viable, novel approach to detect inference attacks on cryptographic
 
 \section{Introduction}
 % ( ?/2000 words) 
-In response to numerous breeches\cite{StateOfIS} of computer systems the use of encryption technique in the storage of data has increased\cite{Raghavendra2016}. Poor design and poor implementation of these techniques has let to false confidence in their effectiveness and additional breech's of trust (e.g. \cite{NewSouthWales}) .
-Numerous tools and techniques have been developed to improve the state of the  art and the correct application of them has been used to strengthen the security of systems and data\cite{SOK2017}.  
-Symbolic Verification is a proven(\cite{Meier2013, 5GAKA, 18XOR}) technique for detecting potential attack scenarios and other weaknesses in cryptographic protocols.
-Briefly, in symbolical modelling of cryptographic protocols messages are represented as terms in a term algebra. As implemented in the automated prover \tamarin{}\cite{Meyer2012} (used in this work); the protocol and actions are modelled by multiset rewriting rules that define transition between states. Security properties are defined by propositional statements about the logged traces of the those transitions. The solver uses a backwards search approach to prove or falsify those properties. 
-This paper presents an approach to extend symbolic modelling techniques(\cite{Meier2013, ObsEqvCCS15}) to detect inference based attacks by modelling auxiliary population histograms and inference based reveal techniques that compare these histograms to those of an encrypted dataset.
+In response to numerous breeches~\cite{StateOfIS} of computer systems the use of encryption techniques in the storage of data has increased~\cite{Raghavendra2016}. Poor design and poor implementation of these techniques has led to false confidence in their effectiveness and additional breeches of trust (e.g. \cite{NewSouthWales}).
+Numerous tools and techniques have been developed to improve the state of the  art and the correct application of them has strengthened the security of systems and data~\cite{SOK2017}.  
+Symbolic Verification is a proven (\cite{Meier2013, 5GAKA, 18XOR}) technique for detecting of potential attack scenarios and other weaknesses in cryptographic protocols.
+In symbolic modelling of cryptographic protocols, messages are represented as terms in a term algebra. The protocol and actions can implemented in an automated prover (e.g. \tamarin{}~\cite{Meyer2012} as used in this work). They are modelled by multiset rewriting rules that define transition between states. Security properties are defined using propositional statements describing the logged traces of the those transitions. The solver uses a backwards search approach to prove or falsify these properties. 
+This paper presents an approach to extend symbolic modelling techniques (\cite{Meier2013, ObsEqvCCS15}) to detect inference based attacks. The approach is based on modelling auxiliary population histograms and inference based reveal techniques that compare  population based histograms to sample based histograms from an encrypted dataset.
 \subsection{Motivation}
 %(?/500 words)}
-This work explores initial directions in how automatic symbolical verification can be extended to detect potential inference attacks in cryptographic protocols, in particular, Property Preserving Encryption protocols.
-The practical application of cryptographic protocols can be viewed as an efficiency/privacy trade-off\cite{GenericAttacks}, where efficiency is a product of functionality and performance. Property Preserving Encryption and other encrypted search techniques\cite{SOK2017} are an area of research that seeks to find the appropriate balance between these three competing concerns.   
+This work explores how automatic symbolical verification can be extended to detect potential inference attacks in cryptographic protocols, with initial directions focused on Property Preserving Encryption protocols.
+The practical application of cryptographic protocols can be viewed as an efficiency/privacy trade-off~\cite{GenericAttacks}, where efficiency is a product of functionality and performance. Property Preserving Encryption and other encrypted search techniques~\cite{SOK2017} are an area of research that seeks to find the appropriate balance between these three competing concerns.   
 
-One technique, Deterministic Encryption (DET) i.e an encryption that always produces the same encrypted text for a given plain-text, forms part of many cryptographically protected database search systems\cite{SOK2017} such as CryptDB \cite{Popa2011}, CipherBase \cite{cipherbase}, Microsoft's Always Encrypted mode in SQLServer\cite{AlwaysEncrypted}, Google's Big Query\cite{BigQuery} and Bellare \cite{Bellare2007}. As a technique DET is useful as it preserving the equality relationships permitting efficient searching and facilitating data relationships in search queries. Though DET encryption is a useful construct for building encrypted databases as it performs well, does not suffer from significant message expansion, and  permits searching it's know to leak equality information \cite{SOK2017} and with a suitable auxiliary dataset the individual values are recoverable via inference\cite{InfrenceAttacks} . 
+One technique is Deterministic Encryption (DET), i.e. an encryption that always produces the same encrypted text for a given plain-text. DET forms part of many cryptographically protected database search systems~\cite{SOK2017} such as CryptDB~\cite{Popa2011}, CipherBase~\cite{cipherbase}, Microsoft's Always Encrypted mode in SQLServer~\cite{AlwaysEncrypted}, Google's Big Query~\cite{BigQuery} and Bellare~\cite{Bellare2007}. As a technique, DET is useful as it preserves the equality relationships permitting efficient searching and facilitating data relationships in search queries. DET encryption is a useful construct for building encrypted databases: it performs well, does not suffer from significant message expansion, and permits searching. However, it is known to leak equality information~\cite{SOK2017} and with a suitable auxiliary dataset the individual values are recoverable via inference~\cite{InfrenceAttacks}. 
 
-Inference attacks are one of the  oldest\cite{Arab} cryptographic attack models. For exposition, consider a simple letter substitution cipher (Caesar's cipher) where 'D' replaces every 'A', 'E' replaces every 'B' etc. An attacker can generate a letter frequency histogram from an auxiliary dataset such as previous messages or even a general language corpus. For the English language message the attacker could assume that the most used letter in the enciphered message corresponds to the letter 'E'. The attacker can continue in this manner using individual letter frequency or include more sophisticate analysis of two-letter frequencies for example.
+Inference attacks are one of the oldest~\cite{Arab} cryptographic attack models. For exposition, consider a simple letter substitution cipher (Caesar's cipher) where $D$ replaces every $A$, $E$ replaces every $B$ etc. An attacker can generate a letter frequency histogram from an auxiliary dataset such as previous messages or even using a general language corpus. For an English language message, the attacker could assume that the most frequently occurring letter in the enciphered message corresponds to the letter $E$. The attacker could continue in this manner using individual letter frequency or include more sophisticated analysis, e.g. two-letter frequencies.
 
-The real-world effectiveness of inference attacks depends on the availability of a well-correlated auxiliary dataset. Work\cite{Ismal2012} on the design of inference attacks  shows that it is possible to recover information about encrypted datasets and queries from data leakage combined with auxiliary datasets such as statistical census data. Work in \cite{InfrenceAttacks} shows that information can be recovered for data encrypted with DET and Order Preserving Encryption (OPE) with a high degree of accuracy; 60\%+ for DET and 80\%+ for OPE in certain cases.
+The real-world effectiveness of inference attacks depends on the availability of a well-correlated auxiliary dataset. Work on the design of inference attacks~\cite{Ismal2012} shows that it is possible to recover information about encrypted datasets and queries from data leakage combined with auxiliary datasets such as statistical census data. Work in~\cite{InfrenceAttacks} shows that information can be recovered with a high degree of accuracy for data encrypted with DET (over 60\%) and Order Preserving Encryption (OPE) (over 80\%) in the example cases presented.
 
-The number of possible values in a dataset affects the success of such attacks. For example the recovery rate of the patients \textit{ Age} was only 10\% in 83\% of the hospitals \cite{InfrenceAttacks}; this was due to the large number of values and multiple values having similar frequencies in the histograms.
+The number of possible values in a dataset affects the success of such attacks. For example the recovery rate of the patients \textit{Age} was only 10\% in 83\% of the hospitals studied~\cite{InfrenceAttacks}; this was due to the large number of values and the multiple values having similar frequency distributions in their histograms.
 
-The security of such a system, then, relies on the \textit{absence} of a strongly correlated auxiliary dataset and on the size and distribution of the values. 
-As proving such a auxiliary dataset does not exist is likely impossible or at the very least impractical to know at design time, detecting that a system is vulnerable in the presence of particular auxiliary dataset motivates the remediation or replacement of such a system.
+Evidently, the security of such a system relies on the \textit{absence} of a strongly correlated auxiliary dataset and on the size and distribution of the values. 
+Proving such a auxiliary dataset does not exist is likely impossible or at the very least impractical to know at design time.  Detecting that a system is vulnerable in the presence of particular auxiliary dataset motivates the remediation or replacement of such a system.
 Symbolic Verification is an established and proven technique for identifying problems with protocols and this work extends the class of problems that can be detected and provides a tool to quantify to what extent systems are vulnerable.
 
 
 \subsection{Threat Model}
-This paper considers a threat model where an adversary has access to an encrypted data set (legitimately as in an honest-but-curious security model or illegitimately in a breech scenario). 
-The attacker also has access to an auxiliary dataset that is structured in the same manner as the encrypted dataset i.e. same data-types and number of distinct values. This auxiliary dataset could be in the form of a publicly available dataset or it could be the result of a side-channel attack \cite{Kocher96}. Examples of side channel attacks that might generate suitable auxiliary data include timing analysis attacks, power analysis attacks and traffic analysis attacks\cite{SideChannelSurvey}.
-The goal of the adversary is to retrieve \textit{all} values in the unencrypted dataset; either because it is of direct value to them or it can be used as an additional Auxiliary dataset to attack another encrypted dataset. 
-The attack is based on the attacker using that the frequency distribution of a column is similar to that of the population and concluding with some degree of confidence what the  given encrypted value is. 
+This paper considers a threat model where an adversary has access to an encrypted data set, either legitimately as in an honest-but-curious security model, or illegitimately in a breech scenario. 
+In these scenarios, in addition to access to an encrypted data set, the attacker has access to an auxiliary dataset that is structured in the same manner as the encrypted dataset, i.e. with the same data-types and the same number of distinct values. This auxiliary dataset could be in the form of a publicly available dataset or it could be the result of a side-channel attack~\cite{Kocher96}. Examples of side channel attacks that might generate suitable auxiliary data include timing analysis attacks, power analysis attacks and traffic analysis attacks~\cite{SideChannelSurvey}.
+The goal of the adversary is to retrieve \textit{all} values in the unencrypted dataset; either because it is of direct value to them or becuase it could be used as an additional auxiliary dataset to attack another encrypted dataset. 
+The attack is based on the attacker using the frequency distribution of a column that is similar to the distribution of a known population to predict the encrypted data values with an estimable degree of confidence.
 
-The \textit{quality} of an auxiliary dataset is application-dependant\cite{InfrenceAttacks}; an auxiliary dataset that is strongly correlated with the target data can give an attacker good results but may not be available to an attacker. 
+The \textit{quality} of an auxiliary dataset is application-dependant~\cite{InfrenceAttacks}; if available, an auxiliary dataset that is strongly correlated with the target data can give an attacker good results.
 
 % \subsection{Inference}
 % \todo[inline]{500 words}
@@ -598,48 +602,49 @@ The \textit{quality} of an auxiliary dataset is application-dependant\cite{Infre
 
 
 \subsection{Contribution}
-We present a symbolic validation(using \tamarin{}) technique for encryption protocols in the face of inference attacks after \cite{InfrenceAttacks}. \textbf{1.} This approach consists of a method to inject auxiliary population data and associated histograms in to a symbolic verification model. \textbf{2.} The approach uses an \textit{Inference} rule that models the reveals of encrypted data when it can be inferred from comparing the histograms of the modelled encrypted dataset to the auxiliary population. \textbf{3.} We present a number of initial case studies applying the technique.
-This technique can be used as a basis for research into attacking other protocols.
+We present a symbolic validation technique using \tamarin{} for encryption protocols in the face of inference attacks after \cite{InfrenceAttacks}. \textbf{1.} This approach consists of a method to inject auxiliary population data and associated histograms in to a symbolic verification model. \textbf{2.} The approach uses an \textit{Inference} rule that models the reveals of encrypted data when it can be inferred by comparing the histograms of the modelled encrypted dataset to an auxiliary population. \textbf{3.} We present a number of initial case studies applying this new technique.
+The technique presented can also be used as a basis for research into attacking other protocols.
 
 \section{Preliminaries}
 
 \subsection{Symbolic Verification with \tamarin{}}
-\tamarin{}\cite{Meier2013} is an automated symbolic verification tool for analysing cryptographic protocols. \tamarin{} allows for the modelling of complex security properties, cryptographic primitives and state. It is an open-source\cite{TamarinGithub} (GPL 3.0 Licensed), actively maintained project with a rich community of contributors. The project is also a rich repository of models used in previous publications including analysis of the 5G AKA protocol\cite{5GAKA}, the DPN3  Power grid protocol\cite{DNP3} and Alethea\cite{Alethea} a secure voting system.
+\tamarin{}~\cite{Meier2013} is an automated symbolic verification tool for analysing cryptographic protocols. \tamarin{} allows for the modelling of complex security properties, cryptographic primitives and state. It is an open-source~\cite{TamarinGithub} tool (GPL 3.0 licensed) and is an actively maintained project with a broad community of contributors. The project also maintains a repository of models used in previous publications including analysis of the 5G AKA protocol~\cite{5GAKA}, the DPN3 Power grid protocol~\cite{DNP3} and Alethea~\cite{Alethea} a secure voting system.
 
 \subsection{Observational Equivalence}
-If two systems appear the same to the outside environment they are set to be \textit{Observational Equivalent}.
+If two systems appear the same to the outside environment they are said to be \textit{Observational Equivalent}.
 This definition can be used to specify properties of a protocol and also in verification of models and implementations. 
-\cite{ObsEqvCCS15} demonstrates a definition of Observational Equivalence and uses \tamarin{} with a number of case studies to illustrate the effectiveness of the approach for proving security properties on protocols with mutable state and unbounded numbers of sessions. \tamarin{} \cite{Schmidt2012AutomatedProperties} prover is a widely used\cite{ARPKICCS14, Donenfeld} tool for symbolic verification in general and numerous case studies\cite{Norwegian,5GAKA} validate the utility of the Observational equivalence approach.
+\cite{ObsEqvCCS15} demonstrates a definition of \textit{Observational Equivalence} and uses \tamarin{} with a number of case studies to illustrate the effectiveness of the approach for proving security properties on protocols with mutable state and unbounded numbers of sessions. The \tamarin{} prover~\cite{Schmidt2012AutomatedProperties} is a widely used~\cite{ARPKICCS14, Donenfeld} tool for symbolic verification in general and numerous case studies~\cite{Norwegian,5GAKA} validate the utility of the Observational equivalence approach.
 
-The automate proof uses a \textit{bi-system} approach. This approach is a multiset rewriting system with a \textit{diff} operator \cite{AutomatedObsEqv18}.  A system modeller can specify two similar systems, denoted left and right, which differ in some terms, with the goal of the automated proved prove that left and right are Observational Equivalent, i.e an attacker can not determine the difference between the two systems.
+The automate proof uses a \textit{bi-system} approach. This approach is a multiset rewriting system with a \textit{diff} operator~\cite{AutomatedObsEqv18}.  A system modeller can specify two similar systems, denoted left and right, which differ in some terms, with the goal of the automated prover to verify that left and right are \textit{Observational Equivalent}, i.e. an attacker cannot determine the difference between the two systems.
+
 \section{Methodology}
-\subsection{Implementing Inference Attack in a Symbolical Model with \tamarin{}}
+\subsection{Implementing an Inference Attack in a Symbolical Model with \tamarin{}}
 %\todo[inline]{1500 words}
-The attacker has access to an encrypted dataset \enc{} over the message space \encSpace{} and plaintext auxiliary dataset \aux{} over the message space \auxSpace. Using a frequency analysis approach similar to the one described in \cite{InfrenceAttacks} an attacker will assign plaintext values to each of the encrypted values by rank ordering the dataset histograms. i.e the most common value in \enc{}\ is declared to be the most common value in \aux{} etc.
+The attacker has access to an encrypted dataset, \enc{}, over the message space, \encSpace{}, and plaintext auxiliary dataset, \aux{}, over the message space \auxSpace. Using a frequency analysis approach similar to the one described in~\cite{InfrenceAttacks} an attacker will assign plaintext values to each of the encrypted values by rank ordering the dataset histograms, i.e. the most common value in \enc{}\ is declared to be the most common value in \aux{} etc.
 
-Models are encoded into state transition \texttt{rules} that model how the protocol proceeds from state to state. The model contains a single shared state for all parties in the protocol and as the protocol is executed \texttt{traces} are recorded of the states and transitions used. Security properties (Secrecy, Uniqueness etc) and execution properties (A must happen before B etc) are enforced via \texttt{lemmas}. Violation of lemmas leads to a proof being falsified.
+Models are encoded into state transition \texttt{rules} that model how the protocol proceeds from state to state. The model contains a single shared state for all parties in the protocol and as the protocol is executed \texttt{traces} of the states and transitions used are recorded. Security properties (secrecy, uniqueness etc.) and execution properties ($A$ must happen before $B$ etc) are enforced via \texttt{lemmas}. Violation of lemmas leads to a proof being falsified.
 
-When run in Observational Equivalence mode two versions of the same protocol system are evaluated with an additional set of Equivalence lemmas that verify if the two versions appear the same to an outside observer.
+When run in \textit{Observational Equivalence} mode two versions of the same protocol system are evaluated with an additional set of equivalence lemmas that verify if the two versions appear the same to an outside observer.
 
-Figure \ref{fig:approach} provides a general schematic of the relationship between the key elements of the approach used.
+Figure~\ref{fig:approach} provides a general schematic of the relationship between the key elements of the approach.
 
  By convention the \textbf{Right Hand System (RHS)} is the secure system while the \textbf{Left Hand System (LHS)} is the system that will be varied under test. Both systems contain the following elements:
 \begin{enumerate}[label=(\Alph*)]
-\item \textbf{Protocol Model} The protocol is modelled with \tamarin{} state transition rules. \tamarin{} uses these state transition rules to move between states. The models of the protocols under test contain \textbf{Modify Rules} that modify the encrypted dataset (i.e. insert new values). Both LHS and RHS have identical modification rules.
+\item \textbf{Protocol Model}: The protocol is modelled with \tamarin{} state transition rules. \tamarin{} uses these state transition rules to move between states. The models of the protocols under test contain \textbf{Modify Rules} that modify the encrypted dataset (i.e. insert new values). Both LHS and RHS have identical modification rules.
 \item \textbf{Security and Execution} properties are encoded in the form of \texttt{lemmas} in both systems. 
 \begin{enumerate}
 	\item \LSecurity{Confidentiality}: the adversary never knows the encrypted values \enc{}. If this lemma is violated the proof fails.
     \item \LExecution{Encryption and Decryption}: Lemma to ensure that has the protocol executed correctly. (A protocol that never executes remains secure and can give false positive results).
-	\item \LExecution{Growth}: The dataset of encrypted values \enc{} grows correctly as new values are added and that the set of counters increments correctly as the population grows; these counters model the distribution in the protected data.
+	\item \LExecution{Growth}: The dataset of encrypted values \enc{} grows correctly as new values are added and that the set of counters increments correctly as the population grows; these counters are used to model the distribution in the protected data.
 \end{enumerate}
 
 \item \textbf{The Auxiliary dataset \aux{} over \auxSpace}:
-In the RHS the Auxiliary dataset \auxsecure{} is an evenly distributed un-encrpted population.  The auxiliary population and its histogram data is encoded into the model using \tamarin{} multi-sets as \tamarin{} currently has no direct support for counters. 
-In the LHS the distribution of the auxiliary population is varied and injected (along with the distribution histograms) in to the model using a script external to \tamarin{}.
-An example of how this the auxiliary dataset and histograms are modelled is included in Listing \ref{lst:CreateAuxDatasetRule}.
-\item\textbf{ Inference Based Reveal Rule}. This is the key element of this approach, it encodes the "intuitive leap" required to connect the distribution of the auxiliary population with the encrypted dataset.   If  distribution of \aux{} matches \enc{} the rule will reveal the plaintext value. The rule is the same in the LHS and RHS. An example of how this is modelled is included in Listing \ref{lst:InferRule}.
-\item \textbf{Execution}
-The \tamarin{} prover is executed with each of generated \aux{} populations in \textbf{Observational Equivalence} mode. The prover can vary the target encrypted dataset distribution by inserting encrypted values using the modification rules. If the prover can not distinguish between the LHS and RHS then we conclude that the protocol is secure for that auxiliary population distribution.  In the case of an evenly distributed auxiliary dataset the there is nothing to infer from regardless of the distribution of the target dataset. In the case of a non-evenly distributed auxiliary datasets the attacker can attack a target dataset with the same distribution. Each permutation of the auxiliary dataset is compared with the evenly distributed dataset in this manner. If the two systems analysis are observational equivalence an attacker can not reason about the differences and Tamarin can prove that an adversary can not distinguish between the two systems and we can prove that the data is secure in the presence of such an auxiliary dataset.
+In the RHS the Auxiliary dataset, \auxsecure{}, is an evenly distributed un-encrpted population.  The auxiliary population and its histogram data is encoded into the model using \tamarin{} multi-sets as \tamarin{} currently has no direct support for counters. 
+In the LHS the distribution of the auxiliary population is varied and injected (along with the distribution histograms) in to the model using a script that is implemented externally to \tamarin{}.
+An example of how this the auxiliary dataset and histograms are modelled is included in Listing~\ref{lst:CreateAuxDatasetRule}.
+\item\textbf{Inference Based Reveal Rule}. This is the key element of this approach, it encodes the ``intuitive leap'' required to connect the distribution of the auxiliary population with the encrypted dataset. If the distribution of \aux{} matches \enc{} the rule will reveal the plaintext value. The rule is the same in the LHS and RHS. An example of how this is modelled is included in Listing~\ref{lst:InferRule}.
+\item \textbf{Execution}:
+The \tamarin{} prover is executed with each of the generated \aux{} populations in \textbf{Observational Equivalence} mode. The prover can vary the target encrypted dataset distribution by inserting encrypted values using the modification rules. If the prover cannot distinguish between the LHS and RHS then we conclude that the protocol is secure for that auxiliary population distribution.  In the case of an evenly distributed auxiliary dataset nothing can be inferred from it regardless of the distribution of the target dataset. In the case of a non-evenly distributed auxiliary dataset the attacker can attack a target dataset with the same distribution. Each permutation of the auxiliary dataset is compared with the evenly distributed dataset in this manner. If the two systems analysis have \textit{observational equivalence} an attacker cannot reason about the differences and \tamarin{} can prove that an adversary cannot distinguish between the two systems. Hence we can prove that the data is secure in the presence of such an auxiliary dataset.
 
 \end{enumerate}
 \input{appendix/SchematicFigure.tex}
@@ -647,49 +652,63 @@ The \tamarin{} prover is executed with each of generated \aux{} populations in \
  
 \section{Case Studies on applying technique}
 \subsection{Attacking 2-value Deterministic Encryption}
-Deterministic Encryption (DET) always encodes the same value the same way. It is well known that it is vulnerable to frequency analysis ( a technique used since the 9th century\cite{Arab} for breaking classical encryption techniques including DET). As mentioned above DET is a widely used construct in encrypted database systems. We consider a DET encrypted database column representing the sex of patients who stayed at a hospital; a simple histogram of the two possible values might show a 55\%/45\% split. An attacker could infer that the 55\% represents females as auxiliary datasets show more of the patients will be female\cite{InfrenceAttacks} than male. This fact can then be leveraged to infer other attributes; i.e certain disease types affect females more than males; more males are born that females and females have a longer life expectancy. These publicly available statistics are an auxiliary dataset that an attacker can freely use. 
+Deterministic Encryption (DET) always encodes the same value the same way. It is well known that it is vulnerable to frequency analysis (a technique used since the 9th century~\cite{Arab} for breaking classical encryption techniques including DET). As mentioned above DET is a widely used construct in encrypted database systems. Consider a DET encrypted database column representing the sex of patients who stayed at a hospital; a simple histogram of the two possible values might show a 55\%/45\% split between sexes. An attacker could infer that the 55\% represents females as auxiliary datasets show more of the patients will be female than male~\cite{InfrenceAttacks}. This fact can be leveraged to infer other attributes; i.e certain disease types affect females more than males; more males are born that females and females have a longer life expectancy. These publicly available statistics are an auxiliary dataset that an attacker can freely use. 
 
 This protocol is modelled and attacked as follows:
 \begin{enumerate}[label=(\Alph*)]
-        \item A. The DET/2 protocol is encode as two pairs of equations which are used by the \textbf{Modify Rules}:
-    \begin{enumerate}
-        \item 	$DET_{encrypt}(1) -> X,\quad	DET_{encrypt}(0) -> Y$
-    	\item 	$DET_{decrypt}(X) ->  1,\quad   DET_{decrypt}(Y) ->  0$
+        \item A. The DET/2 protocol is encode as two pairs of equations which are used by the \textbf{Modify Rules}:\\
         
-    \end{enumerate}
-    The actual X and Y values are determined by the setup phase and do not affect the proof.
-	When a value is stored using the $DET_{encrypt}$ equation the appropriate histogram counters are also incremented. Multi-sets are used as a base-1 counter (i.e $'X'+'X'+'X'+'X'+'X' = 5$).  This approach increments the counters as data is inserted and was found to be significantly faster than the alternative approach of counting on demand with additional counters and rules.
-\item The \aux{} population is encoded as un-ordered multi-sets (e.g $ 1' + '1' ... ' + '0' + '0'$) and the \aux{} histogram counters are injected as base-1 multi-sets as above. 
-\item The inference rule reveals the encrypted values of X and Y if the auxiliary population distribution uniquely matches the encrypted dataset population.
-\item The prover will execute each model twice, if it can not distinguish between the two cases (50/50 and the one under test) then the proof is valid. The population is varied as follows: 0/10\%, 10/90\% ..., 90/10\%, 100/0\%. 
-Using the built in Observational Equivalence function diff(); Tamarin attempts to prove each model twice, once with the Aux population and once with a perfectly distributed set of values (i.e. 50/50\%). 
-\item As a control the experiment is repeated using non-deterministic Random encryption with the expectation that the data is secure regardless of population distribution. This is discussed below.
+    % \begin{enumerate}
+    %     \item 	$DET_{encrypt}(1) -> X,\quad	DET_{encrypt}(0) -> Y$
+    % 	\item 	$DET_{decrypt}(X) ->  1,\quad   DET_{decrypt}(Y) ->  0$
+    % \end{enumerate}
+    
+    $\begin{aligned} DET_{encrypt}(1) \rightarrow X,\quad	DET_{encrypt}(0) \rightarrow Y\\
+    DET_{decrypt}(X) \rightarrow  1,\quad   DET_{decrypt}(Y) \rightarrow  0 \end{aligned}\\$
+    
+    The actual $X$ and $Y$ values are determined by the setup phase and do not affect the proof.
+	When a value is stored using the $DET_{encrypt}$ equation the appropriate histogram counters are also incremented. Multi-sets are used as a $base-1$ counter (i.e $'X'+'X'+'X'+'X'+'X' = 5$).  This approach increments the counters as data is inserted and was found to run significantly faster than the alternative approach of counting on demand with additional counters and rules.
+\item The \aux{} population is encoded as un-ordered multi-sets (e.g $ 1' + '1' ... ' + '0' + '0'$) and the \aux{} histogram counters are injected as $base-1$ multi-sets as above. 
+\item The inference rule reveals the encrypted values of $X$ and $Y$ if the auxiliary population distribution uniquely matches the encrypted dataset population.
+\item The prover will execute each model twice, if it cannot distinguish between the two cases (i.e. the 50/50 case and the one under test) then the proof is valid. The population is varied as follows: 0/10\%, 10/90\% ..., 90/10\%, 100/0\%. 
+Using the built-in \textit{observational equivalence} function, \texttt{diff();}, \tamarin{} attempts to prove each model twice, once with the \aux{} population and once with a perfectly distributed set of values (i.e. 50/50\%). 
+\item As a control, the experiment is repeated using non-deterministic Random encryption (RND) with the expectation that the data is secure regardless of population distribution. This is discussed below.
 \end{enumerate}
-\textbf{Results} As intuitively expected only the protocol is only proved secure in the presence of a 50/50 auxiliary distribution. All other auxiliary distributions allow the symbolic verified to find an attack scenario via inference. The elapsed run time of the verification on commodity hardware was not significant. These findings are an important validation of validity and practicality of the approach.
+\textbf{Results} As was intuitively expected, the protocol is proved to be secure only in the presence of a 50/50 auxiliary distribution. All other auxiliary distributions allow the symbolic verified to find an attack scenario via inference. The elapsed run time of the verification on commodity hardware was not significant. These findings are an important validation of the validity and practicality of the approach.
 
 \subsection{Attacking 2-value Random Encryption}
 As a control for the above case we also modelled a similar protocol replacing the DET equations with non-deterministic encryption.
-This mode of encryption does not allow for searching and is not classed as Property Preserving. This is modelled by the RND equation below. This form of encryption is typically implemented by including a fresh random value in the encryption and as a side effect this technique causes message expansion. This random value is discarded on decryption. A RND encryption function is used in \cite{Popa2011} and other systems as a secure but unsearchable encryption option.
-\begin{enumerate}
-    \item $RND_{decrypt}(key, RND_{encrypt}(key, m))=m$
-\end{enumerate}
-The execution method was identical to that used in the DET case above.\\
+This mode of encryption does not allow for searching and is not classed as Property Preserving. This is modelled using the RND equation\\ 
+
+\begin{equation}
+    RND_{decrypt}(key, RND_{encrypt}(key, m))=m.\\
+\end{equation}
+
+This form of encryption is typically implemented by including a fresh random value in the encryption and as a side effect this technique causes message expansion. The random value is discarded on decryption. A RND encryption function is used in \cite{Popa2011} and other systems as a secure but unsearchable encryption option.
+% \begin{enumerate}
+%     \item $RND_{decrypt}(key, RND_{encrypt}(key, m))=m$
+% \end{enumerate}
+The execution method was identical to that used in the DET case above.
 \textbf{Results} As expected the prover was not able to find an inference attack in any auxiliary population scenario. As with the previous case study the automated proofs did not take a significant about of time to run.
 
 \subsection{Attacking Hash functions}
-A similar model for attacking hash functions the built-in equations theory for hashing was also constructed similarly. The equation theory models a generic single argument irreversible hash function such as SHA. 
-\begin{enumerate}
-    \item $HASH(m) -> h$
-\end{enumerate}
-\textbf{Results} The results were similar to the DET case with only the even distribution of values being provable secure. Although not developed, the addition of a random salt (as used in bcrypt hashing method) would likely yield results similar to the RND case. 
+A model for attacking hash functions using the built-in equations theory for hashing was constructed in a similar manner. The equation theory models a generic single argument irreversible hash function such as SHA as \\
+% \begin{enumerate}
+%     \item $HASH(m) -> h$
+% \end{enumerate}
+\begin{equation}
+    HASH(m) -> h.\\
+\end{equation}
+
+\textbf{Results} The results were similar to the DET case with only the even distribution of values being provably secure. Although not developed, the addition of a random salt (as used in \texttt{bcrypt} hashing method) would likely yield results similar to the RND case. 
 % \todo[inline]{TODO Pretty trivial to rerun over a bunch of different hash functions which will be insecure. Little bit more to implement Hash + salt which will be secure.  Hashing is a form of DET and is commonly used. When used with out proper salt its vulnerable. (Could model this handily and find references to examples where it is not salted correctly and breached) }
 
 
-\subsection{Generalisation - Attacking DET without external Auxiliary data}
-We ran models to confirm that the inference rule can generalise and find attacks without the presence of an specified auxiliary population. By removing the externally generated auxiliary population and adding a second set of \texttt{Modify Rules} that allow the prover to generate both the target dataset and the auxiliary dataset. This approach is based on having the prover find a combination of encrypted data and auxiliary data that leads to data being revealed via the inference rule. This approach is useful for to find that a protocol \textit{is} insecure but it does not help enumerate the conditions under which the inference is a allows an attacker to reveal data. This approach may be particularly useful for finding attacks where the auxiliary data is a by-product of the  protocol execution, i.e side channel attacks.
+\subsection{Generalisation by attacking DET without external auxiliary data}
+We ran models to confirm that the inference rule can generalise and find attacks without the presence of a specified auxiliary population. By removing the externally generated auxiliary population and adding a second set of \texttt{Modify Rules} that allow the prover to generate both the target dataset and the auxiliary dataset. This approach is based on having the prover find a combination of encrypted data and auxiliary data that leads to data being revealed via the inference rule. This approach may find that a protocol \textit{is} insecure but it does enumerate the conditions under which inference allows an attacker to reveal data. This approach may be particularly useful for finding attacks where the auxiliary data is a by-product of the protocol execution, e.g. side channel attacks.
 
 \section{Future Work}
-The technique can currently be applied to a broader range of protocol, potentially yielding new attack models. Future work areas include generalising this technique and exploring adding inference rules automatically to existing symbolic models to extend the applicability of the technique. Currently the infer rule use an exact match, the rule could be extended to have reveal within a specified confidence level of a match. The observational equivalent mode of \tamarin{} could be extended to support multiple auxiliary populations and remove the need for external tooling. 
+The technique presented can currently be applied to a broader range of protocols with the potential to yield new attack models. Future work areas include generalising this technique and exploring the automatic addition of inference rules to existing symbolic models to extend the applicability of the technique. Currently the infer rule uses an exact match and the rule could be extended have reveal within a specified confidence level of a match. The observational equivalent mode of \tamarin{} could be extended to support multiple auxiliary populations and remove the need for external tooling. 
 
 %\todo[inline]{
 % Consider how a  ℓₚ approach would work in Tamarin? very difficult with out maths.... %Could perhaps use python to generate a bunch of rules?
@@ -724,7 +743,7 @@ The technique can currently be applied to a broader range of protocol, potential
 
 % \todo[inline]{Example of a side channel attack? Their is a spthy in examples for a time sensitive protocol}
 \section{Conclusion}
-This novel approach of injecting an auxiliary population and inference rule into a symbolic verification model has proved feasible for some scenarios and is a promising basis for the analysis of other encryption protocols.	Symbolical verification with \tamarin{} is a useful technique for analysing a broad range of protocols and the approach presented here can be used to to augment analysis to detect possible inference based vulnerabilities. The use of an external auxiliary populations proves useful to highlight specific situations where inference attacks are possible and to inform design decisions about the appropriate use of those protocols.
+A novel approach of injecting an auxiliary population and inference rule into a symbolic verification model has been presented and shown to be feasible for some example scenarios. It provides a promising basis for the analysis of other encryption protocols.	Symbolical verification with \tamarin{} is a useful technique for analysing a broad range of protocols and the approach presented here can be used to to augment analysis to detect possible inference based vulnerabilities. The use of an external auxiliary populations proves useful to highlight specific situations where inference attacks are possible and to inform design decisions about the appropriate use of those protocols.
 
 
 % if have a single appendix:
