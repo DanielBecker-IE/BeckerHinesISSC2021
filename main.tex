@@ -1,63 +1,13 @@
-%% bare/jrnl.tex
-%% V1.4b
-%% 2015/08/26
-%% by Michael  Shell
-%% see http://www.michaelshell.org/
-%% for current contact information.
-%%
-%% This is a skeleton file demonstrating the use of IEEEtran.cls
-%% (requires IEEEtran.cls version 1.8b or later) with an IEEE
-%% journal paper.
-%%
-%% Support sites:
-%% http://www.michaelshell.org/tex/ieeetran/
-%% http://www.ctan.org/pkg/ieeetran
-%% and
-%% http://www.ieee.org/
+ %HACK for “Package amsmath Warning Unable to redefine math accent \vec.” warninf
+%from http://neu.davidmuench.de/getting-rid-of-package-amsmath-warning-unable-to-redefine-math-accent-vec/
+\let\origvec\vec
 
-%%*************************************************************************
-%% Legal Notice:
-%% This code is offered as-is without any warranty either expressed or
-%% implied; without even the implied warranty of MERCHANTABILITY or
-%% FITNESS FOR A PARTICULAR PURPOSE! 
-%% User assumes all risk.
-%% In no event shall the IEEE or any contributor to this code be liable for
-%% any damages or losses, including, but not limited to, incidental,
-%% consequential, or any other damages, resulting from the use or misuse
-%% of any information contained here.
-%%
-%% All comments are the opinions of their respective authors and are not
-%% necessarily endorsed by the IEEE.
-%%
-%% This work is distributed under the LaTeX Project Public License (LPPL)
-%% ( http://www.latex-project.org/ ) version 1.3, and may be freely used,
-%% distributed and modified. A copy of the LPPL, version 1.3, is included
-%% in the base LaTeX documentation of all distributions of LaTeX released
-%% 2003/12/01 or later.
-%% Retain all contribution notices and credits.
-%% ** Modified files should be clearly indicated as such, including  **
-%% ** renaming them and changing author support contact information. **
-%%*************************************************************************
+\documentclass[runningheads]{llncs}
 
-
-% *** Authors should verify (and, if needed, correct) their LaTeX system  ***
-% *** with the testflow diagnostic prior to trusting their LaTeX platform ***
-% *** with production work. The IEEE's font choices and paper sizes can   ***
-% *** trigger bugs that do not appear when using other class files.       ***                          ***
-% The testflow support page is at:
-% http://www.michaelshell.org/tex/testflow/
-
-
-
-\documentclass[journal]{IEEEtran}
-%
-% If IEEEtran.cls has not been installed into the LaTeX system files,
-% manually specify the path to it like:
-% \documentclass[journal]{../sty/IEEEtran}
-
-
-
-
+\let\springervec\vec
+\let\vec\origvec
+\usepackage{amsmath}
+%/END HACK
 
 % Some very useful LaTeX packages include:
 % (uncomment the ones you want to load)
@@ -111,14 +61,14 @@
 
 % *** GRAPHICS RELATED PACKAGES ***
 %
-\ifCLASSINFOpdf
-  % \usepackage[pdftex]{graphicx}
+%\ifCLASSINFOpdf
+%  % \usepackage[pdftex]{graphicx}
   % declare the path(s) where your graphic files are
   % \graphicspath{{../pdf/}{../jpeg/}}
   % and their extensions so you won't have to specify these with
   % every instance of \includegraphics
   % \DeclareGraphicsExtensions{.pdf,.jpeg,.png}
-\else
+%\else
   % or other class option (dvipsone, dvipdf, if not using dvips). graphicx
   % will default to the driver specified in the system graphics.cfg if no
   % driver is specified.
@@ -128,7 +78,7 @@
   % and their extensions so you won't have to specify these with
   % every instance of \includegraphics
   % \DeclareGraphicsExtensions{.eps}
-\fi
+%\fi
 % graphicx was written by David Carlisle and Sebastian Rahtz. It is
 % required if you want graphics, photos, etc. graphicx.sty is already
 % installed on most LaTeX systems. The latest version and documentation
@@ -155,7 +105,7 @@
 
 % *** MATH PACKAGES ***
 %
-%\usepackage{amsmath}
+
 % A popular package from the American Mathematical Society that provides
 % many useful and powerful commands for dealing with mathematics.
 %
@@ -213,11 +163,11 @@
 
 
 % *** SUBFIGURE PACKAGES ***
-\ifCLASSOPTIONcompsoc
- \usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
-\else
- \usepackage[caption=false,font=footnotesize]{subfig}
-\fi
+%\ifCLASSOPTIONcompsoc
+ %\usepackage[caption=false,font=normalsize,labelfont=sf,textfont=sf]{subfig}
+%\else
+% \usepackage[caption=false,font=footnotesize]{subfig}
+%\fi
 % subfig.sty, written by Steven Douglas Cochran, is the modern replacement
 % for subfigure.sty, the latter of which is no longer maintained and is
 % incompatible with some LaTeX packages including fixltx2e. However,
@@ -368,9 +318,10 @@
 % for todos
 \usepackage{todonotes}
 
-%For aligned etc
-\usepackage{amsmath}
 
+
+%For appendix from https://tex.stackexchange.com/questions/179997/using-package-appendix-with-llncs
+\usepackage[title,toc,titletoc,header]{appendix}
 
 %Block Diagrams
 % Define block styles
@@ -407,14 +358,15 @@
 %--------------------------------------------------------------------------
 \begin{document}
 %
+\title{Automated Analysis of Inference Attacks on Property Preserving Encryption in the Symbolic Model}
+
 % paper title
 % Titles are generally capitalized except for words such as a, an, and, as,
 % at, but, by, for, in, nor, of, on, or, the, to and up, which are usually
 % not capitalized unless they are the first or last word of the title.
 % Linebreaks \\ can be used within to get better formatting as desired.
 % Do not put math or special symbols in the title.
-\title{Automated Analysis of Inference Attacks on Property Preserving Encryption in the Symbolic Model}
-%
+
 % author names and IEEE memberships
 % note positions of commas and nonbreaking spaces ( ~ ) LaTeX will not break
 % a structure at a ~ so this keeps an author's name from being broken across
@@ -432,9 +384,26 @@
 % GA, 30332 USA e-mail: (see http://www.michaelshell.org/contact.html).}% <-this % stops a space
 % \thanks{J. Doe and J. Doe are with Anonymous University.}% <-this % stops a space
 % \thanks{Manuscript received April 19, 2005; revised August 26, 2015.}}
-\author{Daniel~Becker,~\IEEEmembership{Member,~IEEE,} and Andrew~Hines,~\IEEEmembership{Senior~Member,~IEEE}\\
-School of Computer Science\\University College Dublin, Ireland\\
- Email: daniel@becker.ie,andrew.hines@ucd.ie}
+%\author{Daniel~Becker,~\IEEEmembership{Member,~IEEE,} and Andrew~Hines,~\IEEEmembership{Senior~Member,~IEEE}\\
+% School of Computer Science\\University College Dublin, Ireland\\
+%  Email: daniel@becker.ie,andrew.hines@ucd.ie}
+
+\author{Daniel~Becker\inst{1}\orcidID{0000-1111-2222-3333} \and
+Andrew~Hines\inst{1}\orcidID{1111-2222-3333-4444}} 
+%
+\authorrunning{F. Author et al.}
+% First names are abbreviated in the running head.
+% If there are more than two authors, 'et al.' is used.
+%
+\institute{School of Computer Science\\University College Dublin, Ireland\\
+\email{daniel@becker.ie, andrew.hines@ucd.ie}}
+% \url{http://www.springer.com/gp/computer-science/lncs} \and
+% ABC Institute, Rupert-Karls-University Heidelberg, Heidelberg, Germany\\
+% \email{\{abc,lncs\}@uni-heidelberg.de}}
+%
+
+
+
 % note the % following the last \IEEEmembership and also \thanks - 
 % these prevent an unwanted space from occurring between the last author name
 % and the end of the author line. i.e., if you had this:
@@ -484,8 +453,8 @@ School of Computer Science\\University College Dublin, Ireland\\
 
 
 % make the title area
-\maketitle
-
+%
+\maketitle    
 % As a general rule, do not put math, special symbols or citations
 % in the abstract or keywords.
 \begin{abstract}
@@ -494,9 +463,8 @@ We present a viable, novel approach to detect inference attacks on cryptographic
 \end{abstract}
 
 % Note that keywords are not normally used for peerreview papers.
-\begin{IEEEkeywords}
- Cryptographic Protocol, Protocol verification, Symbolic Model, Property Preserving Encryption, Inference
-\end{IEEEkeywords}
+\keywords{ Cryptographic~Protocol, Protocol~verification, Symbolic~Model, \\Property~Preserving~Encryption,  Inference, \tamarin{}}
+
 
 
 
@@ -511,7 +479,7 @@ We present a viable, novel approach to detect inference attacks on cryptographic
 %
 % For peerreview papers, this IEEEtran command inserts a page break and
 % creates the second title. It will be ignored for other modes.
-\IEEEpeerreviewmaketitle
+%\IEEEpeerreviewmaketitle
 
 % \section{META}
 % Using Tamarin can we model a property preserving encryption protocol and verify it in the symbolical model against a well specified threat profile. Can we get \tamarin{} to find the previously known attacks/limitations.
@@ -567,15 +535,15 @@ We present a viable, novel approach to detect inference attacks on cryptographic
 % ( ?/2000 words) 
 In response to numerous breeches~\cite{StateOfIS} of computer systems the use of encryption techniques in the storage of data has increased~\cite{Raghavendra2016}. Poor design and poor implementation of these techniques has led to false confidence in their effectiveness and additional breeches of trust (e.g. \cite{NewSouthWales}).
 Numerous tools and techniques have been developed to improve the state of the  art and the correct application of them has strengthened the security of systems and data~\cite{SOK2017}.  
-Symbolic Verification is a proven (\cite{Meier2013, 5GAKA, 18XOR}) technique for detecting of potential attack scenarios and other weaknesses in cryptographic protocols.
+Symbolic Verification is a proven (\cite{Meier2013,5GAKA,18XOR}) technique for detecting of potential attack scenarios and other weaknesses in cryptographic protocols.
 In symbolic modelling of cryptographic protocols, messages are represented as terms in a term algebra. The protocol and actions can implemented in an automated prover (e.g. \tamarin{}~\cite{Meyer2012} as used in this work). They are modelled by multiset rewriting rules that define transition between states. Security properties are defined using propositional statements describing the logged traces of the those transitions. The solver uses a backwards search approach to prove or falsify these properties. 
-This paper presents an approach to extend symbolic modelling techniques (\cite{Meier2013, ObsEqvCCS15}) to detect inference based attacks. The approach is based on modelling auxiliary population histograms and inference based reveal techniques that compare  population based histograms to sample based histograms from an encrypted dataset.
+This paper presents an approach to extend symbolic modelling techniques (\cite{Meier2013,ObsEqvCCS15}) to detect inference based attacks. The approach is based on modelling auxiliary population histograms and inference based reveal techniques that compare  population based histograms to sample based histograms from an encrypted dataset.
 \subsection{Motivation}
 %(?/500 words)}
 This work explores how automatic symbolical verification can be extended to detect potential inference attacks in cryptographic protocols, with initial directions focused on Property Preserving Encryption protocols.
 The practical application of cryptographic protocols can be viewed as an efficiency/privacy trade-off~\cite{GenericAttacks}, where efficiency is a product of functionality and performance. Property Preserving Encryption and other encrypted search techniques~\cite{SOK2017} are an area of research that seeks to find the appropriate balance between these three competing concerns.   
 
-One technique is Deterministic Encryption (DET), i.e. an encryption that always produces the same encrypted text for a given plain-text. DET forms part of many cryptographically protected database search systems~\cite{SOK2017} such as CryptDB~\cite{Popa2011}, CipherBase~\cite{cipherbase}, Microsoft's Always Encrypted mode in SQLServer~\cite{AlwaysEncrypted}, Google's Big Query~\cite{BigQuery} and Bellare~\cite{Bellare2007}. As a technique, DET is useful as it preserves the equality relationships permitting efficient searching and facilitating data relationships in search queries. DET encryption is a useful construct for building encrypted databases: it performs well, does not suffer from significant message expansion, and permits searching. However, it is known to leak equality information~\cite{SOK2017} and with a suitable auxiliary dataset the individual values are recoverable via inference~\cite{InfrenceAttacks}. 
+One technique is Deterministic Encryption (DET), i.e. an encryption that always produces the same encrypted text for a given plain-text. DET forms part of many cryptographically protected database search systems~\cite{SOK2017} such as CryptDB~\cite{Popa2011}, CipherBase~\cite{cipherbase}, \textit{Always Encrypted} mode in SQLServer~\cite{AlwaysEncrypted}, Google's Big Query~\cite{BigQuery} and Bellare~\cite{Bellare2007}. As a technique, DET is useful as it preserves the equality relationships permitting efficient searching and facilitating data relationships in search queries. DET encryption is a useful construct for building encrypted databases: it performs well, does not suffer from significant message expansion, and permits searching. However, it is known to leak equality information~\cite{SOK2017} and with a suitable auxiliary dataset the individual values are recoverable via inference~\cite{InfrenceAttacks}. 
 
 Inference attacks are one of the oldest~\cite{Arab} cryptographic attack models. For exposition, consider a simple letter substitution cipher (Caesar's cipher) where $D$ replaces every $A$, $E$ replaces every $B$ etc. An attacker can generate a letter frequency histogram from an auxiliary dataset such as previous messages or even using a general language corpus. For an English language message, the attacker could assume that the most frequently occurring letter in the enciphered message corresponds to the letter $E$. The attacker could continue in this manner using individual letter frequency or include more sophisticated analysis, e.g. two-letter frequencies.
 
@@ -613,7 +581,7 @@ The technique presented can also be used as a basis for research into attacking 
 \subsection{Observational Equivalence}
 If two systems appear the same to the outside environment they are said to be \textit{Observational Equivalent}.
 This definition can be used to specify properties of a protocol and also in verification of models and implementations. 
-\cite{ObsEqvCCS15} demonstrates a definition of \textit{Observational Equivalence} and uses \tamarin{} with a number of case studies to illustrate the effectiveness of the approach for proving security properties on protocols with mutable state and unbounded numbers of sessions. The \tamarin{} prover~\cite{Schmidt2012AutomatedProperties} is a widely used~\cite{ARPKICCS14, Donenfeld} tool for symbolic verification in general and numerous case studies~\cite{Norwegian,5GAKA} validate the utility of the Observational equivalence approach.
+\cite{ObsEqvCCS15} demonstrates a definition of \textit{Observational Equivalence} and uses \tamarin{} with a number of case studies to illustrate the effectiveness of the approach for proving security properties on protocols with mutable state and unbounded numbers of sessions. The \tamarin{} prover~\cite{Schmidt2012AutomatedProperties} is a widely used~\cite{ARPKICCS14,Donenfeld} tool for symbolic verification in general and numerous case studies~\cite{Norwegian,5GAKA} validate the utility of the Observational equivalence approach.
 
 The automate proof uses a \textit{bi-system} approach. This approach is a multiset rewriting system with a \textit{diff} operator~\cite{AutomatedObsEqv18}.  A system modeller can specify two similar systems, denoted left and right, which differ in some terms, with the goal of the automated prover to verify that left and right are \textit{Observational Equivalent}, i.e. an attacker cannot determine the difference between the two systems.
 
@@ -761,14 +729,14 @@ A novel approach of injecting an auxiliary population and inference rule into a 
 %
 
 
-\appendices
+\begin{subappendices}
 
 \section{\tamarin{} Code fragments}
 This appendix includes examples of the key portions of the \tamarin{} models used in the approach.
 
 \input{appendix/AuxPopulationExampleListing.tex}
 \input{appendix/InferRuleExampleListing.tex}
-
+\end{subappendices}
 %\lstinputlisting[language=Tamarmin]{models/AttackingDET_6040.spthy}
 
 
@@ -782,9 +750,9 @@ This appendix includes examples of the key portions of the \tamarin{} models use
 
 % Can use something like this to put references on a page
 % by themselves when using endfloat and the captionsoff option.
-\ifCLASSOPTIONcaptionsoff
-   \newpage
-\fi
+%\ifCLASSOPTIONcaptionsoff
+%   \newpage
+%\fi
 % % \todo[inline]{
 % Browns 8 Questions:
 % 1. Who are intended readers? (3-5 names) 
