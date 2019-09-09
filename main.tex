@@ -359,7 +359,8 @@
 \begin{document}
 %
 \title{Automated Analysis of Inference Attacks on Property Preserving Encryption in the Symbolic Model}
-
+%\authorrunning{Short author list}% Part of LEFT running header
+\titlerunning{Automated Analysis of Inference Attacks}% Part of RIGHT running header
 % paper title
 % Titles are generally capitalized except for words such as a, an, and, as,
 % at, but, by, for, in, nor, of, on, or, the, to and up, which are usually
@@ -391,7 +392,7 @@
 \author{Daniel~Becker\inst{1}\orcidID{0000-1111-2222-3333} \and
 Andrew~Hines\inst{1}\orcidID{1111-2222-3333-4444}} 
 %
-\authorrunning{F. Author et al.}
+\authorrunning{Becker and Hines}
 % First names are abbreviated in the running head.
 % If there are more than two authors, 'et al.' is used.
 %
@@ -543,7 +544,7 @@ This paper presents an approach to extend symbolic modelling techniques (\cite{M
 This work explores how automatic symbolical verification can be extended to detect potential inference attacks in cryptographic protocols, with initial directions focused on Property Preserving Encryption protocols.
 The practical application of cryptographic protocols can be viewed as an efficiency/privacy trade-off~\cite{GenericAttacks}, where efficiency is a product of functionality and performance. Property Preserving Encryption and other encrypted search techniques~\cite{SOK2017} are an area of research that seeks to find the appropriate balance between these three competing concerns.   
 
-One technique is Deterministic Encryption (DET), i.e. an encryption that always produces the same encrypted text for a given plain-text. DET forms part of many cryptographically protected database search systems~\cite{SOK2017} such as CryptDB~\cite{Popa2011}, CipherBase~\cite{cipherbase}, \textit{Always Encrypted} mode in SQLServer~\cite{AlwaysEncrypted}, Google's Big Query~\cite{BigQuery} and Bellare~\cite{Bellare2007}. As a technique, DET is useful as it preserves the equality relationships permitting efficient searching and facilitating data relationships in search queries. DET encryption is a useful construct for building encrypted databases: it performs well, does not suffer from significant message expansion, and permits searching. However, it is known to leak equality information~\cite{SOK2017} and with a suitable auxiliary dataset the individual values are recoverable via inference~\cite{InfrenceAttacks}. 
+One technique is Deterministic Encryption (DET), i.e. an encryption that always produces the same encrypted text for a given plain-text. DET forms part of many cryptographically protected database search systems~\cite{SOK2017} such as CryptDB~\cite{Popa2011}, CipherBase~\cite{cipherbase}, \textit{Always Encrypted} mode in SQLServer~\cite{AlwaysEncrypted}, Google's Big Query~\cite{Schindler2016} and Bellare~\cite{Bellare2007}. As a technique, DET is useful as it preserves the equality relationships permitting efficient searching and facilitating data relationships in search queries. DET encryption is a useful construct for building encrypted databases: it performs well, does not suffer from significant message expansion, and permits searching. However, it is known to leak equality information~\cite{SOK2017} and with a suitable auxiliary dataset the individual values are recoverable via inference~\cite{InfrenceAttacks}. 
 
 Inference attacks are one of the oldest~\cite{Arab} cryptographic attack models. For exposition, consider a simple letter substitution cipher (Caesar's cipher) where $D$ replaces every $A$, $E$ replaces every $B$ etc. An attacker can generate a letter frequency histogram from an auxiliary dataset such as previous messages or even using a general language corpus. For an English language message, the attacker could assume that the most frequently occurring letter in the enciphered message corresponds to the letter $E$. The attacker could continue in this manner using individual letter frequency or include more sophisticated analysis, e.g. two-letter frequencies.
 
@@ -620,9 +621,7 @@ The \tamarin{} prover is executed with each of the generated \aux{} populations 
  
 \section{Case Studies on applying technique}
 \subsection{Attacking 2-value Deterministic Encryption}
-Deterministic Encryption (DET) always encodes the same value the same way. It is well known that it is vulnerable to frequency analysis (a technique used since the 9th century~\cite{Arab} for breaking classical encryption techniques including DET). As mentioned above DET is a widely used construct in encrypted database systems. Consider a DET encrypted database column representing the sex of patients who stayed at a hospital; a simple histogram of the two possible values might show a 55\%/45\% split between sexes. An attacker could infer that the 55\% represents females as auxiliary datasets show more of the patients will be female than male~\cite{InfrenceAttacks}. This fact can be leveraged to infer other attributes; i.e certain disease types affect females more than males; more males are born that females and females have a longer life expectancy. These publicly available statistics are an auxiliary dataset that an attacker can freely use. 
-
-This protocol is modelled and attacked as follows:
+Deterministic Encryption (DET) always encodes the same value the same way. It is well known that it is vulnerable to frequency analysis (a technique used since the 9th century~\cite{Arab} for breaking classical encryption techniques including DET). As mentioned above DET is a widely used construct in encrypted database systems. Consider a DET encrypted database column representing the sex of patients who stayed at a hospital; a simple histogram of the two possible values might show a 55\%/45\% split between sexes. An attacker could infer that the 55\% represents females as auxiliary datasets show more of the patients will be female than male~\cite{InfrenceAttacks}. This fact can be leveraged to infer other attributes; i.e certain disease types affect females more than males; more males are born that females and females have a longer life expectancy. These publicly available statistics are an auxiliary dataset that an attacker can freely use. This protocol is modelled and attacked as follows:
 \begin{enumerate}[label=(\Alph*)]
         \item A. The DET/2 protocol is encode as two pairs of equations which are used by the \textbf{Modify Rules}:\\
         
@@ -732,7 +731,7 @@ A novel approach of injecting an auxiliary population and inference rule into a 
 \begin{subappendices}
 
 \section{\tamarin{} Code fragments}
-This appendix includes examples of the key portions of the \tamarin{} models used in the approach.
+This appendix includes examples of the key portions of the \tamarin{} models used in the approach. The full code of the implmentation is available from the Author's GitHub Repository~\cite{SourceCode}.
 
 \input{appendix/AuxPopulationExampleListing.tex}
 \input{appendix/InferRuleExampleListing.tex}
